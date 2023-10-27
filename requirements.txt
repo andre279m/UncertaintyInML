@@ -1,0 +1,10 @@
+numpy==1.18.1
+scipy==1.4.1
+rdflib==4.2.2
+seaborn
+scikit-learn
+sparqlwrapper
+gensim==3.8.1
+tqdm==4.40.0
+matplotlib
+networkx
