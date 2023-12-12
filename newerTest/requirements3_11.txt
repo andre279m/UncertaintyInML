@@ -8,8 +8,8 @@ gensim
 tqdm
 matplotlib
 aiohttp
-networkx==3.2.1
+networkx
 torch==1.13.1
 pyrdf2vec==0.2.3
-
+requests
 
