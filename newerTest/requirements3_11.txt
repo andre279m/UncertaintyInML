@@ -10,6 +10,5 @@ matplotlib
 aiohttp
 networkx
 torch==1.13.1
-pyrdf2vec==0.2.3
 requests
 
