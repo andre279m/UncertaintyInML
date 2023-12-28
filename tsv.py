@@ -6,7 +6,6 @@ protein_full_links_file_path = 'DB/9606.protein.links.detailed.v12.0.txt'
 prots = []
 
 string_go_terms = {}
-string_go_terms['0'] = '1'
 
 with open(protein_file_path , 'r') as prot_annot:
     prot_annot.readline()
@@ -16,28 +15,29 @@ with open(protein_file_path , 'r') as prot_annot:
         if GO_term.startswith('GO:') :
             url_GO_term = 'http://purl.obolibrary.org/obo/GO_' + GO_term.split(':')[1]
 
-            if id_prot in string_go_terms:
-                string_go_terms[id_prot] += ';+' + url_GO_term
-            else:
-                string_go_terms[id_prot] = '+' + url_GO_term
-
             if id_prot not in prots:
                 prots.append(id_prot)
 
-#annotations = pd.DataFrame.from_dict(string_go_terms, orient='index')
-#annotations.to_csv('DB/annotations_STRING_GO.tsv', sep='\t', header=False)
+            id_prot = id_prot.split('9606.ENSP')[1]
+            if id_prot in string_go_terms:
+                string_go_terms[id_prot] += ';' + url_GO_term
+            else:
+                string_go_terms[id_prot] = url_GO_term
+
+annotations = pd.DataFrame.from_dict(string_go_terms, orient='index')
+annotations.to_csv('DB/SSMC-master/annotations_STRING_GO.tsv', sep='\t', header=False)
 
 data_full = pd.read_csv(protein_full_links_file_path, sep=" ", header=0)
 data_full = data_full[data_full["protein1"].isin(prots) & data_full["protein2"].isin(prots)]
 
 pairs_prots_STRING = []
 for d in data_full.values:
-    pairs_prots_STRING.append((d[0],d[1]))
+    pairs_prots_STRING.append((d[0].split('9606.ENSP')[1],d[1].split('9606.ENSP')[1]))
 
 pairs_prots_STRING = set(pairs_prots_STRING)
 
 # Creating a list of all proteins
-prots_links = [prot for prot in prots]
+prots_links = [prot.split('9606.ENSP')[1] for prot in prots]
 
 negative_pairs_prots = []
 for prot in prots_links:
@@ -48,4 +48,7 @@ for prot in prots_links:
             negative_pairs_prots.append((prot,prot2))
 
 negative_pairs_prots = pd.DataFrame(negative_pairs_prots)
-negative_pairs_prots.to_csv('DB/negative_pairs_prots.tsv', sep='\t', header=False)
+size=int(len(pairs_prots_STRING)*0.1)
+print(size)
+negative_pairs_prots = negative_pairs_prots.sample(n=size, random_state=42)
+negative_pairs_prots.to_csv('DB/SSMC-master/negative_pairs_prots.tsv', sep='\t', header=False,index=False)
