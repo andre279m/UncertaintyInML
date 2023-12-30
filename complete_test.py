@@ -116,8 +116,6 @@ dict_embeddings = {embedCSV.index[i]: embeddings_array[i] for i in range(len(emb
 vector_size = embedCSV.shape[1]
 
 random.seed(42)
-
-random.seed(42)
 f1_results = {} # list of f1 results
 
 for i in range(800, -1, -200):
@@ -169,7 +167,7 @@ for i in range(800, -1, -200):
     #X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42, shuffle=True)
 
         # Training Random Forest classifier
-        rf_model = RandomForestClassifier()
+        rf_model = RandomForestClassifier(n_jobs=-1, random_state=42)
         rf_model.fit(X_train, y_train)
 
         # Obtaining predictions

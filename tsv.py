@@ -48,7 +48,7 @@ for prot in prots_links:
             negative_pairs_prots.append((prot,prot2))
 
 negative_pairs_prots = pd.DataFrame(negative_pairs_prots)
-size=int(len(pairs_prots_STRING)*0.1)
+size=int(len(pairs_prots_STRING))
 print(size)
 negative_pairs_prots = negative_pairs_prots.sample(n=size, random_state=42)
 negative_pairs_prots.to_csv('DB/SSMC-master/negative_pairs_prots.tsv', sep='\t', header=False,index=False)
