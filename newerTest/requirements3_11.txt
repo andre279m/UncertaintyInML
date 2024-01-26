@@ -11,4 +11,4 @@ aiohttp
 networkx
 torch==1.13.1
 requests
-
+xgboost
