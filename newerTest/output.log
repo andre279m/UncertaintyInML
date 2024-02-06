@@ -1,0 +1,60 @@
+2024-01-31 22:26:25 INFO     Training with threshold: 800 and fold: 0
+2024-01-31 22:26:25 INFO     Training with classifier: RandomForestClassifier
+2024-01-31 22:26:33 INFO     Training with classifier: XGBClassifier
+2024-01-31 22:26:35 INFO     Training with classifier: GaussianNB
+2024-01-31 22:26:35 INFO     Training with threshold: 800 and fold: 1
+2024-01-31 22:26:35 INFO     Training with classifier: RandomForestClassifier
+2024-01-31 22:26:43 INFO     Training with classifier: XGBClassifier
+2024-01-31 22:26:45 INFO     Training with classifier: GaussianNB
+2024-01-31 22:26:45 INFO     Training with threshold: 800 and fold: 2
+2024-01-31 22:26:45 INFO     Training with classifier: RandomForestClassifier
+2024-01-31 22:26:53 INFO     Training with classifier: XGBClassifier
+2024-01-31 22:26:55 INFO     Training with classifier: GaussianNB
+2024-01-31 22:28:02 INFO     Training with threshold: 600 and fold: 0
+2024-01-31 22:28:02 INFO     Training with classifier: RandomForestClassifier
+2024-01-31 22:28:22 INFO     Training with classifier: XGBClassifier
+2024-01-31 22:28:25 INFO     Training with classifier: GaussianNB
+2024-01-31 22:28:25 INFO     Training with threshold: 600 and fold: 1
+2024-01-31 22:28:25 INFO     Training with classifier: RandomForestClassifier
+2024-01-31 22:28:45 INFO     Training with classifier: XGBClassifier
+2024-01-31 22:28:48 INFO     Training with classifier: GaussianNB
+2024-01-31 22:28:48 INFO     Training with threshold: 600 and fold: 2
+2024-01-31 22:28:48 INFO     Training with classifier: RandomForestClassifier
+2024-01-31 22:29:08 INFO     Training with classifier: XGBClassifier
+2024-01-31 22:29:11 INFO     Training with classifier: GaussianNB
+2024-01-31 22:31:59 INFO     Training with threshold: 400 and fold: 0
+2024-01-31 22:31:59 INFO     Training with classifier: RandomForestClassifier
+2024-01-31 22:32:59 INFO     Training with classifier: XGBClassifier
+2024-01-31 22:33:03 INFO     Training with classifier: GaussianNB
+2024-01-31 22:33:04 INFO     Training with threshold: 400 and fold: 1
+2024-01-31 22:33:04 INFO     Training with classifier: RandomForestClassifier
+2024-01-31 22:34:03 INFO     Training with classifier: XGBClassifier
+2024-01-31 22:34:07 INFO     Training with classifier: GaussianNB
+2024-01-31 22:34:08 INFO     Training with threshold: 400 and fold: 2
+2024-01-31 22:34:08 INFO     Training with classifier: RandomForestClassifier
+2024-01-31 22:35:08 INFO     Training with classifier: XGBClassifier
+2024-01-31 22:35:12 INFO     Training with classifier: GaussianNB
+2024-01-31 22:40:32 INFO     Training with threshold: 200 and fold: 0
+2024-01-31 22:40:32 INFO     Training with classifier: RandomForestClassifier
+2024-01-31 22:45:36 INFO     Training with classifier: XGBClassifier
+2024-01-31 22:45:51 INFO     Training with classifier: GaussianNB
+2024-01-31 22:45:54 INFO     Training with threshold: 200 and fold: 1
+2024-01-31 22:45:54 INFO     Training with classifier: RandomForestClassifier
+2024-01-31 22:50:58 INFO     Training with classifier: XGBClassifier
+2024-01-31 22:51:13 INFO     Training with classifier: GaussianNB
+2024-01-31 22:51:15 INFO     Training with threshold: 200 and fold: 2
+2024-01-31 22:51:15 INFO     Training with classifier: RandomForestClassifier
+2024-01-31 22:56:19 INFO     Training with classifier: XGBClassifier
+2024-01-31 22:56:33 INFO     Training with classifier: GaussianNB
+2024-01-31 23:02:54 INFO     Training with threshold: 0 and fold: 0
+2024-01-31 23:02:54 INFO     Training with classifier: RandomForestClassifier
+2024-01-31 23:12:54 INFO     Training with classifier: XGBClassifier
+2024-01-31 23:13:21 INFO     Training with classifier: GaussianNB
+2024-01-31 23:13:25 INFO     Training with threshold: 0 and fold: 1
+2024-01-31 23:13:25 INFO     Training with classifier: RandomForestClassifier
+2024-01-31 23:23:36 INFO     Training with classifier: XGBClassifier
+2024-01-31 23:24:04 INFO     Training with classifier: GaussianNB
+2024-01-31 23:24:08 INFO     Training with threshold: 0 and fold: 2
+2024-01-31 23:24:08 INFO     Training with classifier: RandomForestClassifier
+2024-01-31 23:34:07 INFO     Training with classifier: XGBClassifier
+2024-01-31 23:34:34 INFO     Training with classifier: GaussianNB

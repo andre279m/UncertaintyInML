@@ -1,14 +1,15 @@
 # Imports
 import pandas as pd
 import numpy as np
-from sklearn.model_selection import StratifiedShuffleSplit
+from sklearn.model_selection import StratifiedKFold
 from sklearn import metrics
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier, BaggingClassifier
 from sklearn.svm import SVC
 from sklearn.naive_bayes import GaussianNB
-from sklearn.neighbors import KNeighborsClassifier
-import xgboost as xgb
-import random
+from xgboost import XGBClassifier
+import random,logging
+
+logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s',level = logging.INFO,datefmt='%Y-%m-%d %H:%M:%S')
 # Files
 gene_ontology_file_path = '../DB/go.owl'
 protein_file_path = '../DB/9606.protein.enrichment.terms.v12.0.txt'
@@ -21,18 +22,11 @@ prots = pd.read_csv(protein_file_path, sep='\t', header=0)
 prots = prots[prots['term'].str.startswith('GO:')].reset_index(drop=True)
 prots = prots['#string_protein_id'].unique().tolist()
 
-prots = []
-
 # Distribution of Confidence
 data_full = pd.read_csv(protein_full_links_file_path, sep=" ", header=0)
 data_full = data_full[data_full["protein1"].isin(prots) & data_full["protein2"].isin(prots)]
 # mean of confidence score
 mean = data_full['combined_score'].mean()
-
-# negatives = pd.read_csv(semantic_similarity_file_path, header=0, index_col=0,dtype={'Entity A': str, 'Entity B': str}).sort_values(by=['BMA_Seco2004'], ascending=True).reset_index()
-# negatives['BMA_Seco2004'] = (1-negatives['BMA_Seco2004']) * 1000
-# negatives['Entity A'] = 'https://string-db.org/network/9606.ENSP' + negatives['Entity A']
-# negatives['Entity B'] = 'https://string-db.org/network/9606.ENSP' + negatives['Entity B']
 
 # Creating thresholds
 # Thresholds for the whole dataset
@@ -131,10 +125,9 @@ random.seed(42)
 # List of classifiers
 classifiers = [
     RandomForestClassifier(n_jobs=-1, random_state=42),
-    SVC(n_jobs=-1, random_state=42),
-    KNeighborsClassifier(n_jobs=-1, random_state=42),
-    xgb(n_jobs=-1, random_state=42),
-    GaussianNB(n_jobs=-1, random_state=42)
+#    BaggingClassifier(estimator=SVC(random_state=42),random_state=42, n_jobs=-1),
+    XGBClassifier(n_jobs=-1, random_state=42),
+    GaussianNB()
 ]
 
 f1_to_csv = {}
@@ -163,6 +156,7 @@ for i in range(800, -1, -200):
     # Sample weight
     sample_weight = list(data['combined_score'].values)
     sample_weight.extend([1000 for i in range(0, len(pairs_prots))])
+    sample_weight = np.array(sample_weight)
 
     # Generating pair representations using hadamard operator # other possibilities are concatenation, wl-1 or wl-2
     X, y = [], []
@@ -181,30 +175,34 @@ for i in range(800, -1, -200):
         y.append(int(label))
 
     # Creating training set and test set
-    sss = StratifiedShuffleSplit(n_splits=10, random_state=42)
+    skf = StratifiedKFold(n_splits=3, random_state=42, shuffle=True)
     X, y = np.array(X), np.array(y)
-    for train_index, test_index in sss.split(X, y):
+    for j, (train_index, test_index) in enumerate(skf.split(X, y)):
         X_train, X_test = X[train_index], X[test_index]
         y_train, y_test = y[train_index], y[test_index]
         sample_weight_train = sample_weight[train_index]
 
+        logging.info("Training with threshold: " + str(i) + " and fold: " + str(j))
+
         for clf in classifiers:
 
-            clf.fit(X_train, y_train,sample_weight=sample_weight_train)
+            logging.info("Training with classifier: " + type(clf).__name__)
+
+            clf.fit(X_train, y_train)
             # Obtaining predictions
             pred_test = clf.predict(X_test)
             # Computing performance metrics
             weighted_avg_f1 = metrics.f1_score(y_test, pred_test, average='weighted')
             
             n = type(clf).__name__
-            if not f1_to_csv[n] :
-                f1_to_csv[n] = {}
+            if n not in f1_to_csv :
+                f1_to_csv[n] = {}   
 
-            if not f1_to_csv[n][i] :
+            if i not in f1_to_csv[n] :
                 f1_to_csv[n][i] = [weighted_avg_f1]
             else :
                 f1_to_csv[n][i].append(weighted_avg_f1)
-
-for v in f1_to_csv.values:
+    
+for v in f1_to_csv.keys():
     df = pd.DataFrame.from_dict(f1_to_csv[v], orient='index')
-    df.to_csv('../Results/f1_results_negsW1000_' + v + '_Fraction10.csv')
+    df.to_csv('../Results/f1_results_negsWeigthless_' + v + '_Fraction10.csv')
