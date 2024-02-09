@@ -42,10 +42,12 @@ prots_links = [prot.split('9606.ENSP')[1] for prot in prots]
 negative_pairs_prots = []
 for prot in prots_links:
     for prot2 in prots_links:
-        if (prot,prot2) in pairs_prots_STRING:
+        if (prot,prot2,1) in pairs_prots_STRING or (prot2,prot,1) in pairs_prots_STRING:
             continue
         elif prot != prot2:
-            negative_pairs_prots.append((prot,prot2))
+            negative_pairs_prots.append((prot,prot2,0))
+
+negative_pairs_prots = list(set(negative_pairs_prots))
 
 negative_pairs_prots = pd.DataFrame(negative_pairs_prots)
 size=int(len(pairs_prots_STRING))
