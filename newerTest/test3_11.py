@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import StratifiedKFold
 from sklearn import metrics
-from sklearn.ensemble import RandomForestClassifier, BaggingClassifier
+from sklearn.ensemble import RandomForestClassifier, BaggingClassifier,AdaBoostClassifier
 from sklearn.svm import SVC
 from sklearn.naive_bayes import GaussianNB
 from xgboost import XGBClassifier
@@ -124,10 +124,11 @@ random.seed(42)
 
 # List of classifiers
 classifiers = [
-    RandomForestClassifier(n_jobs=-1, random_state=42),
-#    BaggingClassifier(estimator=SVC(random_state=42),random_state=42, n_jobs=-1),
-    XGBClassifier(n_jobs=-1, random_state=42),
-    GaussianNB()
+#     RandomForestClassifier(n_jobs=-1, random_state=42),
+#     BaggingClassifier(random_state=42, n_jobs=-1),
+#     XGBClassifier(n_jobs=-1, random_state=42),
+#     GaussianNB()
+    AdaBoostClassifier(random_state=42)
 ]
 
 f1_to_csv = {}
@@ -155,7 +156,7 @@ for i in range(800, -1, -200):
 
     # Sample weight
     sample_weight = list(data['combined_score'].values)
-    sample_weight.extend([1000 for i in range(0, len(pairs_prots))])
+    sample_weight.extend([mean for i in range(0, len(pairs_prots))])
     sample_weight = np.array(sample_weight)
 
     # Generating pair representations using hadamard operator # other possibilities are concatenation, wl-1 or wl-2
@@ -205,4 +206,4 @@ for i in range(800, -1, -200):
     
 for v in f1_to_csv.keys():
     df = pd.DataFrame.from_dict(f1_to_csv[v], orient='index')
-    df.to_csv('../Results/f1_results_negsWeigthless_' + v + '_Fraction10.csv')
+    df.to_csv('../Results/f1_results_negsWeightless_' + v + '_Fraction10.csv')

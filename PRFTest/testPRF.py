@@ -97,7 +97,7 @@ for prot in prots_links:
         if (prot,prot2,1) in pairs_prots_STRING or (prot2,prot,1) in pairs_prots_STRING:
             continue
         elif prot != prot2:
-            all_negative_pairs_prots.append((prot,prot2,(1,0)))
+            all_negative_pairs_prots.append((prot,prot2,(mean/1000,1-(mean/1000))))
 
 all_negative_pairs_prots = list(set(all_negative_pairs_prots))
 
@@ -129,13 +129,15 @@ for i in range(800, -1, -200):
     elif i == 400:
         data = data4
     elif i == 200:
+        break
         data = data2
     elif i == 0:
+        break
         data = dataSample
 
     pairs_prots = []
     for d in data.values:
-        pairs_prots.append(('https://string-db.org/network/' + d[0],'https://string-db.org/network/' + d[1], 1))
+        pairs_prots.append(('https://string-db.org/network/' + d[0],'https://string-db.org/network/' + d[1], (1-(d[-1]/1000),d[-1]/1000)))
 
     # Without semantic similarity
     negative_pairs_prots = random.sample(all_negative_pairs_prots, len(pairs_prots))
@@ -143,33 +145,36 @@ for i in range(800, -1, -200):
     #negative_pairs_prots = all_negative_pairs_prots[:len(pairs_prots)]    
 
     # Generating pair representations using hadamard operator # other possibilities are concatenation, wl-1 or wl-2
-    X, y = [], []
+    X, y, labels= [], [], []
     for prot1, prot2, label in pairs_prots:
         emb_prot1 = dict_embeddings[prot1].reshape(1, vector_size)
         emb_prot2 = dict_embeddings[prot2].reshape(1, vector_size)
         hada = np.multiply(emb_prot1, emb_prot2)
         X.append(hada.tolist()[0])
-        y.append(int(label))
+        y.append([label[0],label[1]])
+        labels.append(1)
 
     for prot1, prot2, label in negative_pairs_prots:
         emb_prot1 = dict_embeddings[prot1].reshape(1, vector_size)
         emb_prot2 = dict_embeddings[prot2].reshape(1, vector_size)
         hada = np.multiply(emb_prot1, emb_prot2)
         X.append(hada.tolist()[0])
-        y.append(int(label))
+        y.append([label[0],label[1]])
+        labels.append(0)
 
     # Creating training set and test set
     skf = StratifiedKFold(n_splits=3, random_state=42, shuffle=True)
     X, y = np.array(X), np.array(y)
-    for j, (train_index, test_index) in enumerate(skf.split(X, y)):
+    labels = np.array(labels)
+    for j, (train_index, test_index) in enumerate(skf.split(X,labels)):
         X_train, X_test = X[train_index], X[test_index]
         y_train, y_test = y[train_index], y[test_index]
-        sample_weight_train = sample_weight[train_index]
+        label_train, label_test = labels[train_index], labels[test_index]
 
         logging.info("Training with threshold: " + str(i) + " and fold: " + str(j))
 
          # Training Random Forest classifier
-        prf_model = prf(n_estimators=10, bootstrap=True, keep_proba=0.05, n_jobs=-1)
+        prf_model = prf(n_estimators=10, bootstrap=True, keep_proba=0.05, n_jobs=12)
 
         logging.info("Training with classifier: " + type(prf_model).__name__)
 
@@ -177,7 +182,7 @@ for i in range(800, -1, -200):
         # Obtaining predictions
         pred_test = prf_model.predict(X=X_test)
         # Computing performance metrics
-        weighted_avg_f1 = metrics.f1_score(y_test, pred_test, average='weighted')
+        weighted_avg_f1 = metrics.f1_score(label_test, pred_test, average='weighted')
         
         n = type(prf_model).__name__
         if n not in f1_to_csv :
@@ -190,4 +195,4 @@ for i in range(800, -1, -200):
     
 for v in f1_to_csv.keys():
     df = pd.DataFrame.from_dict(f1_to_csv[v], orient='index')
-    df.to_csv('../Results/f1_results_negsWeigthless_' + v + '_Fraction10.csv')
+    df.to_csv('../Results/f1_results_negsWmean_PRF_Fraction10.csv')
