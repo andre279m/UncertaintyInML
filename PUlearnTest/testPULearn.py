@@ -120,7 +120,7 @@ dict_embeddings = {embedCSV.index[i]: embeddings_array[i] for i in range(len(emb
 vector_size = embedCSV.shape[1]
 random.seed(42)
 
-#estimator = RandomForestClassifier(n_jobs=-1, random_state=42)
+estimator = RandomForestClassifier(n_jobs=-1, random_state=42)
 
 # List of classifiers
 classifiers = [
@@ -129,11 +129,13 @@ classifiers = [
 #     XGBClassifier(n_jobs=-1, random_state=42),
 #     GaussianNB()
 #     AdaBoostClassifier(random_state=42)
-#     ElkanotoPuClassifier(estimator, hold_out_ratio=0.1)
-    BaggingPuClassifier(hold_out_ratio=0.1, n_jobs=-1, random_state=42, n_estimators=10)
+    ElkanotoPuClassifier(estimator, hold_out_ratio=0.1),
+    BaggingPuClassifier(n_jobs=-1, random_state=42, n_estimators=10)
 ]
 
 f1_to_csv = {}
+precision_to_csv = {}
+recall_to_csv = {}
 
 for i in range(800, -1, -200):
     if i == 800:
@@ -200,8 +202,27 @@ for i in range(800, -1, -200):
             pred_test = clf.predict(X_test)
             # Computing performance metrics
             weighted_avg_f1 = metrics.f1_score(label_test, pred_test, average='weighted')
+            weighted_avg_precision = metrics.precision_score(label_test, pred_test, average='weighted')
+            weighted_avg_recall = metrics.recall_score(label_test, pred_test, average='weighted')
             
             n = type(clf).__name__
+
+            if n not in precision_to_csv :
+                precision_to_csv[n] = {}
+
+            if i not in precision_to_csv[n] :
+                precision_to_csv[n][i] = [weighted_avg_precision]
+            else :
+                precision_to_csv[n][i].append(weighted_avg_precision)
+
+            if n not in recall_to_csv :
+                recall_to_csv[n] = {}
+
+            if i not in recall_to_csv[n] :
+                recall_to_csv[n][i] = [weighted_avg_recall]
+            else :
+                recall_to_csv[n][i].append(weighted_avg_recall)
+
             if n not in f1_to_csv :
                 f1_to_csv[n] = {}   
 
@@ -213,3 +234,11 @@ for i in range(800, -1, -200):
 for v in f1_to_csv.keys():
     df = pd.DataFrame.from_dict(f1_to_csv[v], orient='index')
     df.to_csv('../Results/f1_results_negsWeightless_' + v + '_Fraction10.csv')
+
+for v in precision_to_csv.keys():
+    df = pd.DataFrame.from_dict(precision_to_csv[v], orient='index')
+    df.to_csv('../Results/precision_results_negsWeightless_' + v + '_Fraction10.csv')
+
+for v in recall_to_csv.keys():
+    df = pd.DataFrame.from_dict(recall_to_csv[v], orient='index')
+    df.to_csv('../Results/recall_results_negsWeightless_' + v + '_Fraction10.csv')
