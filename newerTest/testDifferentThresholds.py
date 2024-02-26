@@ -24,16 +24,19 @@ prots = prots['#string_protein_id'].unique().tolist()
 
 # Distribution of Confidence
 data_full = pd.read_csv(protein_full_links_file_path, sep=" ", header=0)
-data_full = data_full[data_full["protein1"].isin(prots) & data_full["protein2"].isin(prots)]
+data_full = data_full[data_full["protein1"].isin(prots) & data_full["protein2"].isin(prots)].sort_values(by=['combined_score'], ascending=False).reset_index(drop=True)
 # mean of confidence score
 mean = data_full['combined_score'].mean()
 
 # Creating thresholds
 fulldata8 = data_full[data_full['combined_score'] > 800]
 setsize = int(len(fulldata8)/2)
-train_data8 = fulldata8.sample(n=setsize, random_state=42)
-dt8 = data_full[~data_full.isin(train_data8)].dropna().sort_values(by=['combined_score'], ascending=False).reset_index(drop=True)
-select = [int((N*len(dt8))/setsize) for N in range(setsize)]
+select = [int((N*len(data_full))/setsize) for N in range(setsize)]
+train_data = data_full.loc[select]
+dt8 = data_full[~data_full.isin(train_data)].dropna().sort_values(by=['combined_score'], ascending=False).reset_index(drop=True)
+
+testsize = int(len(data_full)*0.1)
+select = [int((N*len(dt8))/testsize) for N in range(testsize)]
 test_data8 = dt8.loc[select]
 
 # Without semantic similarity
@@ -62,7 +65,7 @@ classifiers = [
 
 metrics_to_csv = pd.DataFrame(columns=['precision', 'recall', 'WAF'])
 
-data = train_data8
+data = train_data
 
 pairs_prots = []
 for d in data.values:
@@ -125,7 +128,7 @@ for clf in classifiers:
 
     logging.info("Training with classifier: " + type(clf).__name__)
 
-    clf.fit(X_train, y_train)
+    clf.fit(X_train, y_train,sample_weight=sample_weight)
     # Obtaining predictions
     pred_test = clf.predict(X_test)
     # Computing performance metrics
@@ -136,5 +139,5 @@ for clf in classifiers:
     n = type(clf).__name__
     metrics_to_csv.loc[n] = [weighted_avg_precision, weighted_avg_recall, weighted_avg_f1]
 
-metrics_to_csv.to_csv('../Results/metrics_results_trainWabove800.csv')
+metrics_to_csv.to_csv('../Results/metrics_results_W100Fraction10.csv')
         

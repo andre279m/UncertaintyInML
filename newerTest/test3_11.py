@@ -54,32 +54,21 @@ data2 = data_full.where(data_full['combined_score']>200).dropna().reset_index(dr
 dataSample = data_full.sample(frac=0.1,random_state=42)
 
 
-# Thresholds for uniform sampling
-
-# select = []
-# for N in range(1000):
-#    ind = int(N*len(data8)/1000)
-#    select.append(ind)
+# Thresholds for stratified sampling
+# setsize = int(len(data8)*0.1)
+# select = [int((N*len(data8))/setsize) for N in range(setsize)]
 # data8 = data8.loc[select]
-# select = []
-# for N in range(1000):
-#    ind = int(N*len(data6)/1000)
-#    select.append(ind)
+# setsize = int(len(data6)*0.1)
+# select = [int((N*len(data6))/setsize) for N in range(setsize)]
 # data6 = data6.loc[select]
-# select = []
-# for N in range(1000):
-#    ind = int(N*len(data4)/1000)
-#    select.append(ind)
+# setsize = int(len(data4)*0.1)
+# select = [int((N*len(data4))/setsize) for N in range(setsize)]
 # data4 = data4.loc[select]
-# select = []
-# for N in range(1000):
-#    ind = int(N*len(data8)/1000)
-#    select.append(ind)
+# setsize = int(len(data2)*0.1)
+# select = [int((N*len(data2))/setsize) for N in range(setsize)]
 # data2 = data2.loc[select]
-# select = []
-# for N in range(1000):
-#    ind = int(N*len(dataSample)/1000)
-#    select.append(ind)
+# setsize = int(len(dataSample)*0.1)
+# select = [int((N*len(dataSample))/setsize) for N in range(setsize)]
 # dataSample = dataSample.reset_index(drop=True).loc[select]
 
 
@@ -143,7 +132,7 @@ for i in range(800, -1, -200):
     sample_weight.extend([100 for i in range(0, len(pairs_prots))])
     sample_weight = np.array(sample_weight)
 
-    # sample_weight = np.log(sample_weight)
+    sample_weight = np.exp(0.1 * (sample_weight - 700))
 
     # Generating pair representations using hadamard operator # other possibilities are concatenation, wl-1 or wl-2
     X, y = [], []
@@ -192,4 +181,4 @@ for i in range(800, -1, -200):
     
 for v in f1_to_csv.keys():
     df = pd.DataFrame.from_dict(f1_to_csv[v], orient='index')
-    df.to_csv('../Results/f1_results_negsWlog_' + v + '_Fraction10.csv')
+    df.to_csv('../Results/f1_results_negsWexp01_' + v + '_Fraction10.csv')
