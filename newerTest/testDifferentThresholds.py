@@ -31,8 +31,8 @@ mean = data_full['combined_score'].mean()
 # Creating thresholds
 fulldata8 = data_full[data_full['combined_score'] > 800]
 setsize = int(len(fulldata8)/2)
-select = [int((N*len(data_full))/setsize) for N in range(setsize)]
-train_data = data_full.loc[select]
+select = [int((N*len(fulldata8))/setsize) for N in range(setsize)]
+train_data = fulldata8.loc[select]
 dt8 = data_full[~data_full.isin(train_data)].dropna().sort_values(by=['combined_score'], ascending=False).reset_index(drop=True)
 
 testsize = int(len(data_full)*0.1)
@@ -139,5 +139,5 @@ for clf in classifiers:
     n = type(clf).__name__
     metrics_to_csv.loc[n] = [weighted_avg_precision, weighted_avg_recall, weighted_avg_f1]
 
-metrics_to_csv.to_csv('../Results/metrics_results_W100Fraction10.csv')
+metrics_to_csv.to_csv('../Results/metrics_results_trainWabove800WSampleWeight100.csv')
         
