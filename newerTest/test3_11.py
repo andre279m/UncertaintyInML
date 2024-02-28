@@ -129,10 +129,10 @@ for i in range(800, -1, -200):
 
     # Sample weight
     sample_weight = list(data['combined_score'].values)
-    sample_weight.extend([100 for i in range(0, len(pairs_prots))])
+    sample_weight.extend([mean for i in range(0, len(pairs_prots))])
     sample_weight = np.array(sample_weight)
 
-    sample_weight = np.exp(0.1 * (sample_weight - 700))
+    # sample_weight = np.exp(0.1 * (sample_weight - 700))
 
     # Generating pair representations using hadamard operator # other possibilities are concatenation, wl-1 or wl-2
     X, y = [], []
