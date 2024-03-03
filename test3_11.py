@@ -11,12 +11,12 @@ import random,logging
 
 logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s',level = logging.INFO,datefmt='%Y-%m-%d %H:%M:%S')
 # Files
-gene_ontology_file_path = '../DB/go.owl'
-protein_file_path = '../DB/9606.protein.enrichment.terms.v12.0.txt'
-protein_links_file_path = '../DB/9606.protein.links.v12.0.txt'
-protein_full_links_file_path = '../DB/9606.protein.links.detailed.v12.0.txt'
-semantic_similarity_file_path = '../DB/NegativeSamplesUncertainty.csv'
-gene_ontology_annotated_file_path = '../DB/go_annotated.owl'
+gene_ontology_file_path = 'DB/go.owl'
+protein_file_path = 'DB/9606.protein.enrichment.terms.v12.0.txt'
+protein_links_file_path = 'DB/9606.protein.links.v12.0.txt'
+protein_full_links_file_path = 'DB/9606.protein.links.detailed.v12.0.txt'
+semantic_similarity_file_path = 'DB/NegativeSamplesUncertainty.csv'
+gene_ontology_annotated_file_path = 'DB/go_annotated.owl'
 # Creating the Knowledge graph
 prots = pd.read_csv(protein_file_path, sep='\t', header=0)
 prots = prots[prots['term'].str.startswith('GO:')].reset_index(drop=True)
@@ -77,7 +77,7 @@ dataSample = data_full.sample(frac=0.1,random_state=42)
 # test = data_full.where(data_full['combined_score']<800).dropna().reset_index(drop=True).sample(frac=0.1,random_state=42)
 
 # Without semantic similarity
-all_negative_pairs_prots = pd.read_csv('../DB/negative_pairs_prots.csv', header=0)
+all_negative_pairs_prots = pd.read_csv('DB/negative_pairs_prots.csv', header=0)
 all_negative_pairs_prots = list(tuple(x) for x in all_negative_pairs_prots.to_numpy())
 
 # With semantic similarity
@@ -89,7 +89,7 @@ all_negative_pairs_prots = list(tuple(x) for x in all_negative_pairs_prots.to_nu
 del data_full
 del prots
 # Pipeline
-embedCSV = pd.read_csv('../DB/embeddings.csv',index_col=0)
+embedCSV = pd.read_csv('DB/embeddings.csv',index_col=0)
 embeddings_array = np.array(list(embedCSV.values))
 dict_embeddings = {embedCSV.index[i]: embeddings_array[i] for i in range(len(embeddings_array))}
 vector_size = embedCSV.shape[1]
@@ -181,4 +181,4 @@ for i in range(800, -1, -200):
     
 for v in f1_to_csv.keys():
     df = pd.DataFrame.from_dict(f1_to_csv[v], orient='index')
-    df.to_csv('../Results/f1_results_negsWexp01_' + v + '_Fraction10.csv')
+    df.to_csv('Results/f1_results_negsWexp01_' + v + '_Fraction10.csv')

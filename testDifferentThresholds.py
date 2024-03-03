@@ -11,12 +11,12 @@ import random,logging
 
 logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s',level = logging.INFO,datefmt='%Y-%m-%d %H:%M:%S')
 # Files
-gene_ontology_file_path = '../DB/go.owl'
-protein_file_path = '../DB/9606.protein.enrichment.terms.v12.0.txt'
-protein_links_file_path = '../DB/9606.protein.links.v12.0.txt'
-protein_full_links_file_path = '../DB/9606.protein.links.detailed.v12.0.txt'
-semantic_similarity_file_path = '../DB/NegativeSamplesUncertainty.csv'
-gene_ontology_annotated_file_path = '../DB/go_annotated.owl'
+gene_ontology_file_path = 'DB/go.owl'
+protein_file_path = 'DB/9606.protein.enrichment.terms.v12.0.txt'
+protein_links_file_path = 'DB/9606.protein.links.v12.0.txt'
+protein_full_links_file_path = 'DB/9606.protein.links.detailed.v12.0.txt'
+semantic_similarity_file_path = 'DB/NegativeSamplesUncertainty.csv'
+gene_ontology_annotated_file_path = 'DB/go_annotated.owl'
 # Creating the Knowledge graph
 prots = pd.read_csv(protein_file_path, sep='\t', header=0)
 prots = prots[prots['term'].str.startswith('GO:')].reset_index(drop=True)
@@ -40,7 +40,7 @@ select = [int((N*len(dt8))/testsize) for N in range(testsize)]
 test_data8 = dt8.loc[select]
 
 # Without semantic similarity
-all_negative_pairs_prots = pd.read_csv('../DB/negative_pairs_prots.csv', header=0)
+all_negative_pairs_prots = pd.read_csv('DB/negative_pairs_prots.csv', header=0)
 all_negative_pairs_prots = list(tuple(x) for x in all_negative_pairs_prots.to_numpy())
 
 del data_full
@@ -48,7 +48,7 @@ del prots
 del fulldata8
 del dt8
 # Pipeline
-embedCSV = pd.read_csv('../DB/embeddings.csv',index_col=0)
+embedCSV = pd.read_csv('DB/embeddings.csv',index_col=0)
 embeddings_array = np.array(list(embedCSV.values))
 dict_embeddings = {embedCSV.index[i]: embeddings_array[i] for i in range(len(embeddings_array))}
 vector_size = embedCSV.shape[1]
@@ -139,5 +139,5 @@ for clf in classifiers:
     n = type(clf).__name__
     metrics_to_csv.loc[n] = [weighted_avg_precision, weighted_avg_recall, weighted_avg_f1]
 
-metrics_to_csv.to_csv('../Results/metrics_results_trainWabove800WSampleWeight100.csv')
+metrics_to_csv.to_csv('Results/metrics_results_trainWabove800WSampleWeight100.csv')
         
