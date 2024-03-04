@@ -55,7 +55,7 @@ dt_test = dt_test[~dt_test.isin(train_data2)].dropna().sort_values(by=['combined
 dt_test = dt_test[~dt_test.isin(train_data0)].dropna().sort_values(by=['combined_score'], ascending=False).reset_index(drop=True)
 
 for i in range(5):
-    select = [int((N*len(dt_test))/testsize) + 1 for N in range(testsize)]
+    select = [int((N*len(dt_test))/testsize) + i for N in range(testsize)]
     test_data = dt_test.loc[select]
     test_data.to_csv('DB/TEST/test_data'+str(i)+'.csv', index=False)
 
@@ -81,6 +81,6 @@ negative_train2.to_csv('DB/TRAIN/negative_train2.csv', index=False)
 negative_train0.to_csv('DB/TRAIN/negative_train0.csv', index=False)
 
 for i in range(5):
-    select = [int((N*len(all_negative_pairs_prots))/testsize)+1 for N in range(testsize)]
+    select = [int((N*len(all_negative_pairs_prots))/testsize) + i for N in range(testsize)]
     negative_pairs_prots = all_negative_pairs_prots.loc[select]
     negative_pairs_prots.to_csv('DB/TEST/negative_pairs_prots'+str(i)+'.csv', index=False)

@@ -1,0 +1,75 @@
+2024-03-04 21:27:16 INFO     Training with threshold: 8 and fold: 0
+2024-03-04 21:27:16 INFO     Training with classifier: RandomForestClassifier
+2024-03-04 21:29:14 INFO     Training with classifier: XGBClassifier
+2024-03-04 21:30:57 INFO     Training with threshold: 8 and fold: 1
+2024-03-04 21:30:57 INFO     Training with classifier: RandomForestClassifier
+2024-03-04 21:32:55 INFO     Training with classifier: XGBClassifier
+2024-03-04 21:34:42 INFO     Training with threshold: 8 and fold: 2
+2024-03-04 21:34:42 INFO     Training with classifier: RandomForestClassifier
+2024-03-04 21:36:41 INFO     Training with classifier: XGBClassifier
+2024-03-04 21:38:27 INFO     Training with threshold: 8 and fold: 3
+2024-03-04 21:38:27 INFO     Training with classifier: RandomForestClassifier
+2024-03-04 21:40:26 INFO     Training with classifier: XGBClassifier
+2024-03-04 21:42:10 INFO     Training with threshold: 8 and fold: 4
+2024-03-04 21:42:10 INFO     Training with classifier: RandomForestClassifier
+2024-03-04 21:44:10 INFO     Training with classifier: XGBClassifier
+2024-03-04 21:45:54 INFO     Training with threshold: 6 and fold: 0
+2024-03-04 21:45:54 INFO     Training with classifier: RandomForestClassifier
+2024-03-04 21:47:52 INFO     Training with classifier: XGBClassifier
+2024-03-04 21:49:40 INFO     Training with threshold: 6 and fold: 1
+2024-03-04 21:49:40 INFO     Training with classifier: RandomForestClassifier
+2024-03-04 21:51:37 INFO     Training with classifier: XGBClassifier
+2024-03-04 21:53:22 INFO     Training with threshold: 6 and fold: 2
+2024-03-04 21:53:22 INFO     Training with classifier: RandomForestClassifier
+2024-03-04 21:55:19 INFO     Training with classifier: XGBClassifier
+2024-03-04 21:57:04 INFO     Training with threshold: 6 and fold: 3
+2024-03-04 21:57:04 INFO     Training with classifier: RandomForestClassifier
+2024-03-04 21:59:02 INFO     Training with classifier: XGBClassifier
+2024-03-04 22:00:50 INFO     Training with threshold: 6 and fold: 4
+2024-03-04 22:00:50 INFO     Training with classifier: RandomForestClassifier
+2024-03-04 22:02:47 INFO     Training with classifier: XGBClassifier
+2024-03-04 22:04:31 INFO     Training with threshold: 4 and fold: 0
+2024-03-04 22:04:31 INFO     Training with classifier: RandomForestClassifier
+2024-03-04 22:06:28 INFO     Training with classifier: XGBClassifier
+2024-03-04 22:08:13 INFO     Training with threshold: 4 and fold: 1
+2024-03-04 22:08:13 INFO     Training with classifier: RandomForestClassifier
+2024-03-04 22:10:10 INFO     Training with classifier: XGBClassifier
+2024-03-04 22:11:57 INFO     Training with threshold: 4 and fold: 2
+2024-03-04 22:11:57 INFO     Training with classifier: RandomForestClassifier
+2024-03-04 22:13:53 INFO     Training with classifier: XGBClassifier
+2024-03-04 22:15:38 INFO     Training with threshold: 4 and fold: 3
+2024-03-04 22:15:38 INFO     Training with classifier: RandomForestClassifier
+2024-03-04 22:17:34 INFO     Training with classifier: XGBClassifier
+2024-03-04 22:19:20 INFO     Training with threshold: 4 and fold: 4
+2024-03-04 22:19:20 INFO     Training with classifier: RandomForestClassifier
+2024-03-04 22:21:16 INFO     Training with classifier: XGBClassifier
+2024-03-04 22:23:03 INFO     Training with threshold: 2 and fold: 0
+2024-03-04 22:23:03 INFO     Training with classifier: RandomForestClassifier
+2024-03-04 22:24:55 INFO     Training with classifier: XGBClassifier
+2024-03-04 22:26:39 INFO     Training with threshold: 2 and fold: 1
+2024-03-04 22:26:39 INFO     Training with classifier: RandomForestClassifier
+2024-03-04 22:28:30 INFO     Training with classifier: XGBClassifier
+2024-03-04 22:30:17 INFO     Training with threshold: 2 and fold: 2
+2024-03-04 22:30:17 INFO     Training with classifier: RandomForestClassifier
+2024-03-04 22:32:09 INFO     Training with classifier: XGBClassifier
+2024-03-04 22:33:54 INFO     Training with threshold: 2 and fold: 3
+2024-03-04 22:33:54 INFO     Training with classifier: RandomForestClassifier
+2024-03-04 22:35:48 INFO     Training with classifier: XGBClassifier
+2024-03-04 22:37:33 INFO     Training with threshold: 2 and fold: 4
+2024-03-04 22:37:33 INFO     Training with classifier: RandomForestClassifier
+2024-03-04 22:39:26 INFO     Training with classifier: XGBClassifier
+2024-03-04 22:41:12 INFO     Training with threshold: 0 and fold: 0
+2024-03-04 22:41:12 INFO     Training with classifier: RandomForestClassifier
+2024-03-04 22:43:03 INFO     Training with classifier: XGBClassifier
+2024-03-04 22:44:49 INFO     Training with threshold: 0 and fold: 1
+2024-03-04 22:44:49 INFO     Training with classifier: RandomForestClassifier
+2024-03-04 22:46:40 INFO     Training with classifier: XGBClassifier
+2024-03-04 22:48:26 INFO     Training with threshold: 0 and fold: 2
+2024-03-04 22:48:26 INFO     Training with classifier: RandomForestClassifier
+2024-03-04 22:50:16 INFO     Training with classifier: XGBClassifier
+2024-03-04 22:51:59 INFO     Training with threshold: 0 and fold: 3
+2024-03-04 22:51:59 INFO     Training with classifier: RandomForestClassifier
+2024-03-04 22:53:50 INFO     Training with classifier: XGBClassifier
+2024-03-04 22:55:38 INFO     Training with threshold: 0 and fold: 4
+2024-03-04 22:55:38 INFO     Training with classifier: RandomForestClassifier
+2024-03-04 22:57:29 INFO     Training with classifier: XGBClassifier
