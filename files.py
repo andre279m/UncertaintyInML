@@ -61,26 +61,25 @@ for i in range(5):
 
 all_negative_pairs_prots = pd.read_csv('DB/negative_pairs_prots.csv', header=0)
 all_negative_pairs_prots = list(tuple(x) for x in all_negative_pairs_prots.to_numpy())
+all_negative_pairs_prots = pd.DataFrame(all_negative_pairs_prots, columns=['protein1', 'protein2','label'])
 
-negative_train8 = random.sample(all_negative_pairs_prots, len(train_data8))
-negative_train6 = random.sample(all_negative_pairs_prots, len(train_data6))
-negative_train4 = random.sample(all_negative_pairs_prots, len(train_data4))
-negative_train2 = random.sample(all_negative_pairs_prots, len(train_data2))
-negative_train0 = random.sample(all_negative_pairs_prots, len(train_data0))
-all_negative_pairs_prots = [x for x in all_negative_pairs_prots if x not in negative_train8 and x not in negative_train6 and x not in negative_train4 and x not in negative_train2 and x not in negative_train0]
+negative_train8 = all_negative_pairs_prots.sample(len(train_data8))
+negative_train6 = all_negative_pairs_prots.sample(len(train_data6))
+negative_train4 = all_negative_pairs_prots.sample(len(train_data4))
+negative_train2 = all_negative_pairs_prots.sample(len(train_data2))
+negative_train0 = all_negative_pairs_prots.sample(len(train_data0))
+all_negative_pairs_prots = all_negative_pairs_prots[~all_negative_pairs_prots.isin(negative_train8)].dropna().reset_index(drop=True)
+all_negative_pairs_prots = all_negative_pairs_prots[~all_negative_pairs_prots.isin(negative_train6)].dropna().reset_index(drop=True)
+all_negative_pairs_prots = all_negative_pairs_prots[~all_negative_pairs_prots.isin(negative_train4)].dropna().reset_index(drop=True)
+all_negative_pairs_prots = all_negative_pairs_prots[~all_negative_pairs_prots.isin(negative_train2)].dropna().reset_index(drop=True)
+all_negative_pairs_prots = all_negative_pairs_prots[~all_negative_pairs_prots.isin(negative_train0)].dropna().reset_index(drop=True)
 
-megative_train8 = pd.DataFrame(negative_train8, columns=['protein1', 'protein2'])
 negative_train8.to_csv('DB/TRAIN/negative_train8.csv', index=False)
-negative_train6 = pd.DataFrame(negative_train6, columns=['protein1', 'protein2'])
 negative_train6.to_csv('DB/TRAIN/negative_train6.csv', index=False)
-negative_train4 = pd.DataFrame(negative_train4, columns=['protein1', 'protein2'])
 negative_train4.to_csv('DB/TRAIN/negative_train4.csv', index=False)
-negative_train2 = pd.DataFrame(negative_train2, columns=['protein1', 'protein2'])
 negative_train2.to_csv('DB/TRAIN/negative_train2.csv', index=False)
-negative_train0 = pd.DataFrame(negative_train0, columns=['protein1', 'protein2'])
 negative_train0.to_csv('DB/TRAIN/negative_train0.csv', index=False)
 
-all_negative_pairs_prots = pd.DataFrame(all_negative_pairs_prots, columns=['protein1', 'protein2'])
 for i in range(5):
     select = [int(((N*len(all_negative_pairs_prots))+1)/testsize) for N in range(testsize)]
     negative_pairs_prots = all_negative_pairs_prots.loc[select]
