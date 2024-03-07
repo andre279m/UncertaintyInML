@@ -7,7 +7,6 @@ logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s',level = log
 # Files
 gene_ontology_file_path = 'DB/go.owl'
 protein_file_path = 'DB/9606.protein.enrichment.terms.v12.0.txt'
-protein_links_file_path = 'DB/9606.protein.links.v12.0.txt'
 protein_full_links_file_path = 'DB/9606.protein.links.detailed.v12.0.txt'
 semantic_similarity_file_path = 'DB/NegativeSamplesUncertainty.csv'
 gene_ontology_annotated_file_path = 'DB/go_annotated.owl'
