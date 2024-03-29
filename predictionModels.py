@@ -16,7 +16,7 @@ def get_classifiers():
     ]
     return classifiers
 
-embedCSV = pd.read_csv('DB/embeddings.csv',index_col=0)
+embedCSV = pd.read_csv('DB/HuriTest/embeddings_train.csv',index_col=0)
 embeddings_array = np.array(list(embedCSV.values))
 dict_embeddings = {embedCSV.index[i]: embeddings_array[i] for i in range(len(embeddings_array))}
 vector_size = embedCSV.shape[1]
@@ -26,7 +26,6 @@ for t in ['Uniform','Static','Growing']:
     for i in range(800, -1, -200):
         logging.info("Starting training with threshold: " + str(i))
         metrics_to_csv = {}
-        pd.DataFrame(columns=['precision', 'recall', 'WAF','accuracy','AUC'])
         for f in range(10):
             logging.info("Starting training with fold: " + str(f))
             X_train1 = np.loadtxt('DB/'+t+'/T'+str(i)+'/X_train_Fold'+str(f)+'.csv', delimiter=',',dtype=str)
@@ -82,6 +81,6 @@ for t in ['Uniform','Static','Growing']:
                     auc = roc_auc_score(y_test, y_pred)
                     metrics_to_csv[m][n].loc[len(metrics_to_csv[m][n].index)] = [prec, rec, f1, acc, auc]
                     if f == 9:
-                        Path('Results/7_03Test/Folds/').mkdir(parents=True, exist_ok=True)
-                        metrics_to_csv[m][n].to_csv('Results/7_03Test/Folds/'+t+'T'+str(i)+'metrics_'+m+n+'.csv', index=False)
+                        Path('Results/22_03Test/Folds/').mkdir(parents=True, exist_ok=True)
+                        metrics_to_csv[m][n].to_csv('Results/22_03Test/Folds/'+t+'T'+str(i)+'metrics_'+m+n+'.csv', index=False)
                 
