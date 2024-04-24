@@ -124,6 +124,7 @@ prots_test = list(prots_test)
 all_prots = prots_train + prots_test
 
 logging.info("Starting training with RDF2Vec")
+k = len(prots_train)
 
 # Generating the embeddings
 embeddings = transformer.fit_transform(g_pyrdf2vec, all_prots)
@@ -135,7 +136,7 @@ dict_embeddings_train = pd.DataFrame.from_dict(dict_embeddings_train, orient='in
 dict_embeddings_train.to_csv('../DB/HuriTest/embeddings_train.csv')
 del dict_embeddings_train
 del prots_train
-dict_embeddings_test = {prots_test[i]: embeddings[i] for i in range(len(prots_test))}
+dict_embeddings_test = {prots_test[i]: embeddings[k+i] for i in range(len(prots_test))}
 dict_embeddings_test = pd.DataFrame.from_dict(dict_embeddings_test, orient='index')
 dict_embeddings_test.to_csv('../DB/HuriTest/embeddings_test.csv')
 

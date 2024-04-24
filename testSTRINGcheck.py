@@ -25,13 +25,13 @@ protein_file_path = 'DB/9606.protein.enrichment.terms.v12.0.txt'
 protein_full_links_file_path = 'DB/9606.protein.links.detailed.v12.0.txt'
 semantic_similarity_file_path = 'DB/NegativeSamplesUncertainty.csv'
 # # Creating the Knowledge graph
-# prots = pd.read_csv(protein_file_path, sep='\t', header=0)
-# prots = prots[prots['term'].str.startswith('GO:')].reset_index(drop=True)
-# prots = prots['#string_protein_id'].unique().tolist()
+prots = pd.read_csv(protein_file_path, sep='\t', header=0)
+prots = prots[prots['term'].str.startswith('GO:')].reset_index(drop=True)
+prots = prots['#string_protein_id'].unique().tolist()
 
 # # Distribution of Confidence
-# data_full = pd.read_csv(protein_full_links_file_path, sep=" ", header=0)
-# data_full = data_full[data_full["protein1"].isin(prots) & data_full["protein2"].isin(prots)]
+data_full = pd.read_csv(protein_full_links_file_path, sep=" ", header=0)
+data_full = data_full[data_full["protein1"].isin(prots) & data_full["protein2"].isin(prots)]
 # mean of confidence score
 # mean = data_full['combined_score'].mean()
 
@@ -58,7 +58,7 @@ semantic_similarity_file_path = 'DB/NegativeSamplesUncertainty.csv'
 # data6 = data_full.where(data_full['combined_score']>600).dropna().reset_index(drop=True).sample(frac=0.1,random_state=42)
 # data4 = data_full.where(data_full['combined_score']>400).dropna().reset_index(drop=True).sample(frac=0.1,random_state=42)
 # data2 = data_full.where(data_full['combined_score']>200).dropna().reset_index(drop=True).sample(frac=0.1,random_state=42)
-# dataSample = data_full.sample(frac=0.1,random_state=42)
+dataSample = data_full.sample(frac=0.1,random_state=42)
 
 
 # Thresholds for stratified sampling
@@ -84,7 +84,7 @@ semantic_similarity_file_path = 'DB/NegativeSamplesUncertainty.csv'
 # test = data_full.where(data_full['combined_score']<800).dropna().reset_index(drop=True).sample(frac=0.1,random_state=42)
 
 # Without semantic similarity
-all_negative_pairs_prots = pd.read_csv('DB/HuriTest/HuRI_negatives.tsv',sep='\t',header=None)
+all_negative_pairs_prots = pd.read_csv('DB/negative_pairs_prots.csv',sep=',',header=0)
 all_negative_pairs_prots = list(tuple(x) for x in all_negative_pairs_prots.to_numpy())
 
 # With semantic similarity
@@ -102,15 +102,6 @@ dict_embeddings = {embedCSV.index[i]: embeddings_array[i] for i in range(len(emb
 vector_size = embedCSV.shape[1]
 random.seed(42)
 
-# List of classifiers
-classifiers = [
-    RandomForestClassifier(n_jobs=-1, random_state=42),
-#     BaggingClassifier(random_state=42, n_jobs=-1),
-    XGBClassifier(n_jobs=-1, random_state=42),
-#     GaussianNB()
-#    AdaBoostClassifier(random_state=42)
-]
-
 f1_to_csv = {}
 
 # for i in range(800, -1, -200):
@@ -125,15 +116,15 @@ f1_to_csv = {}
 #     elif i == 0:
 #         data = dataSample
 
-huri_data = pd.read_csv('DB/HuriTest/HuRI.tsv',sep='\t',header=None,names=['protein1', 'protein2'])
+# huri_data = pd.read_csv('DB/HuriTest/HuRI.tsv',sep='\t',header=None,names=['protein1', 'protein2'])
 
 
-huri_prots = np.loadtxt('DB/HuriTest/HuRI_proteins.txt',dtype=str)
-huri_data = huri_data[huri_data["protein1"].isin(huri_prots) & huri_data["protein2"].isin(huri_prots)].reset_index(drop=True)
+# huri_prots = np.loadtxt('DB/HuriTest/HuRI_proteins.txt',dtype=str)
+# huri_data = huri_data[huri_data["protein1"].isin(huri_prots) & huri_data["protein2"].isin(huri_prots)].reset_index(drop=True)
 
 pairs_prots = []
-for d in huri_data.values:
-    pairs_prots.append(('http:/www.ensembl.org/Homo_sapiens/Location/View?r=' + d[0],'http:/www.ensembl.org/Homo_sapiens/Location/View?r=' + d[1], 1))
+for d in dataSample.values:
+    pairs_prots.append(('https://string-db.org/network/' + d[0],'https://string-db.org/network/' + d[1], 1))
 
 # Without semantic similarity
 negative_pairs_prots = random.sample(all_negative_pairs_prots, len(pairs_prots))
@@ -148,47 +139,50 @@ negative_pairs_prots = random.sample(all_negative_pairs_prots, len(pairs_prots))
 # sample_weight = np.exp(0.1 * (sample_weight - 700))
 
 # Generating pair representations using hadamard operator # other possibilities are concatenation, wl-1 or wl-2
-X, y = [], []
+X_train, y_train = [], []
 for prot1, prot2, label in pairs_prots:
     emb_prot1 = dict_embeddings[prot1].reshape(1, vector_size)
     emb_prot2 = dict_embeddings[prot2].reshape(1, vector_size)
     hada = np.multiply(emb_prot1, emb_prot2)
-    X.append(hada.tolist()[0])
-    y.append(int(label))
+    X_train.append(hada.tolist()[0])
+    y_train.append(int(label))
 
-for prot1, prot2 in negative_pairs_prots:
-    prot1 = 'http:/www.ensembl.org/Homo_sapiens/Location/View?r=' + prot1
-    prot2 = 'http:/www.ensembl.org/Homo_sapiens/Location/View?r=' + prot2
+for prot1, prot2, label in negative_pairs_prots:
     emb_prot1 = dict_embeddings[prot1].reshape(1, vector_size)
     emb_prot2 = dict_embeddings[prot2].reshape(1, vector_size)
     hada = np.multiply(emb_prot1, emb_prot2)
-    X.append(hada.tolist()[0])
-    y.append(0)
+    X_train.append(hada.tolist()[0])
+    y_train.append(0)
+
+X_test1 = np.loadtxt('DB/Uniform/T0/X_test_Fold9.csv', delimiter=',',dtype=str)
+
+X_test, y_test = [], []
+for prot1, prot2 in X_test1:
+    prot1 = 'https://string-db.org/network/9606.ENSP' + str(prot1)
+    prot2 = 'https://string-db.org/network/9606.ENSP' + str(prot2)
+    emb_prot1 = dict_embeddings[prot1].reshape(1, vector_size)
+    emb_prot2 = dict_embeddings[prot2].reshape(1, vector_size)
+    hada = np.multiply(emb_prot1, emb_prot2)
+    X_test.append(hada.tolist()[0])
+y_test = np.loadtxt('DB/Uniform/T0/y_test_Fold9.csv', delimiter=',')
+
 
 metrics_to_csv = pd.DataFrame(columns=['precision', 'recall', 'WAF','accuracy','AUC'])
-
-
 # Creating training set and test set
-skf = StratifiedKFold(n_splits=10, random_state=42, shuffle=True)
-X, y = np.array(X), np.array(y)
-for j, (train_index, test_index) in enumerate(skf.split(X, y)):
-    X_train, X_test = X[train_index], X[test_index]
-    y_train, y_test = y[train_index], y[test_index]
 
-    # logging.info("Training with threshold: " + str(i) + " and fold: " + str(j))
-    clfs = get_classifiers()
-    for c in clfs:
-        n = type(c).__name__
-        m = 'Normal'
-        c.fit(X_train, y_train)
-        y_pred = c.predict(X_test)
-        prec = precision_score(y_test, y_pred, average='weighted')
-        rec = recall_score(y_test, y_pred, average='weighted')
-        f1 = f1_score(y_test, y_pred, average='weighted')
-        acc = accuracy_score(y_test, y_pred)
-        auc = roc_auc_score(y_test, y_pred)
-        metrics_to_csv.loc[j] = [prec, rec, f1, acc, auc]
-        if j == 9:
-            Path('Results/5_04Test/HuRICheck/').mkdir(parents=True, exist_ok=True)
-            metrics_to_csv.to_csv('Results/5_04Test/HuRICheck/metrics_'+m+n+'.csv', index=False)
-        
+
+# logging.info("Training with threshold: " + str(i) + " and fold: " + str(j))
+clfs = get_classifiers()
+for c in clfs:
+    n = type(c).__name__
+    m = 'Normal'
+    c.fit(X_train, y_train)
+    y_pred = c.predict(X_test)
+    prec = precision_score(y_test, y_pred, average='weighted')
+    rec = recall_score(y_test, y_pred, average='weighted')
+    f1 = f1_score(y_test, y_pred, average='weighted')
+    acc = accuracy_score(y_test, y_pred)
+    auc = roc_auc_score(y_test, y_pred)
+    metrics_to_csv.loc[800] = [prec, rec, f1, acc, auc]
+    Path('Results/5_04Test/HuRICheck/').mkdir(parents=True, exist_ok=True)
+    metrics_to_csv.to_csv('Results/5_04Test/HuRICheck/metrics0_'+m+n+'.csv', index=False)
