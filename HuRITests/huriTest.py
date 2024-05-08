@@ -16,8 +16,8 @@ def get_classifiers():
     ]
     return classifiers
 # Files
-protein_file_path = 'DB/9606.protein.enrichment.terms.v12.0.txt'
-protein_full_links_file_path = 'DB/9606.protein.links.detailed.v12.0.txt'
+protein_file_path = '../DB/9606.protein.enrichment.terms.v12.0.txt'
+protein_full_links_file_path = '../DB/9606.protein.links.detailed.v12.0.txt'
 # Creating the Knowledge graph
 prots = pd.read_csv(protein_file_path, sep='\t', header=0)
 prots = prots[prots['term'].str.startswith('GO:')].reset_index(drop=True)
@@ -35,29 +35,28 @@ setsize = int(len(fulldata8))
 
 del fulldata8
 
-all_negative_pairs_prots = pd.read_csv('DB/negative_pairs_prots.csv', header=0)
+all_negative_pairs_prots = pd.read_csv('../DB/negative_pairs_prots.csv', header=0)
 all_negative_pairs_prots = list(tuple(x) for x in all_negative_pairs_prots.to_numpy())
 
-negative_pairs_prots_test = pd.read_csv('DB/HuriTest/HuRI_negatives.tsv',sep='\t',header=None)
+negative_pairs_prots_test = pd.read_csv('../DB/HuriTest/HuRI_negatives.tsv',sep='\t',header=None)
 negative_pairs_prots_test = list(tuple(x) for x in negative_pairs_prots_test.to_numpy())
 
 # Pipeline
-embedtrainCSV = pd.read_csv('DB/HuriTest/embeddings_train.csv',index_col=0)
+embedtrainCSV = pd.read_csv('../DB/HuriTest/embeddings_train.csv',index_col=0)
 embeddings_train_array = np.array(list(embedtrainCSV.values))
 train_embeddings = {embedtrainCSV.index[i]: embeddings_train_array[i] for i in range(len(embeddings_train_array))}
 
-embedtestCSV = pd.read_csv('DB/HuriTest/embeddings_test.csv',index_col=0)
+embedtestCSV = pd.read_csv('../DB/HuriTest/embeddings_test.csv',index_col=0)
 embeddings_test_array = np.array(list(embedtestCSV.values))
 test_embeddings = {embedtestCSV.index[i]: embeddings_test_array[i] for i in range(len(embeddings_test_array))}
 
 vector_size = embedtrainCSV.shape[1]
 random.seed(42)
 
-huri_data = pd.read_csv('DB/HuriTest/HuRI.tsv',sep='\t',header=None,names=['protein1', 'protein2'])
+huri_data = pd.read_csv('../DB/HuriTest/HuRI.tsv',sep='\t',header=None,names=['protein1', 'protein2'])
 
-huri_prots = np.loadtxt('DB/HuriTest/HuRI_proteins.txt',dtype=str)
+huri_prots = np.loadtxt('../DB/HuriTest/HuRI_proteins.txt',dtype=str)
 huri_data = huri_data[huri_data["protein1"].isin(huri_prots) & huri_data["protein2"].isin(huri_prots)].reset_index(drop=True)
-
 
 pairs_prots_huri = []
 for d in huri_data.values:
@@ -154,7 +153,7 @@ for t in ['Uniform','Static','Growing']:
         X_test = np.array(X_test)
         y_test = np.array(y_test)
 
-        for m in ['PU','Normal','Weighted']:
+        for m in ['PU','Normal']:
             if m not in metrics_to_csv:
                 metrics_to_csv[m] = {}
             logging.info("Starting training with model: " + m)
@@ -163,26 +162,26 @@ for t in ['Uniform','Static','Growing']:
                 n = type(c).__name__
                 if n not in metrics_to_csv[m]:
                     metrics_to_csv[m][n] = pd.DataFrame(columns=['precision', 'recall', 'WAF','accuracy','AUC'])
-                if m == 'Weighted':
-                    c.fit(X_train, y_train, sample_weight = sample_weight)
-                    y_pred = c.predict(X_test)
-                elif m == 'PU':
+                #if m == 'Weighted':
+                #    c.fit(X_train, y_train, sample_weight = sample_weight)
+                #    y_pred = c.predict(X_test)
+                if m == 'PU':
                     pu = ElkanotoPuClassifier(estimator = c, hold_out_ratio = 0.1)
-                    y_train_pu = np.where(y_train == 0, -1, y_train)
-                    pu.fit(X_train, y_train)
-                    y_pred = pu.predict(X_test)
+                    y_train_pu = np.where(y_test == 0, -1, y_test)
+                    pu.fit(X_test, y_test)
+                    y_pred = pu.predict(X_train)
                 else:
-                    c.fit(X_train, y_train)
-                    y_pred = c.predict(X_test)
-                prec = precision_score(y_test, y_pred, average='weighted')
-                rec = recall_score(y_test, y_pred, average='weighted')
-                f1 = f1_score(y_test, y_pred, average='weighted')
-                acc = accuracy_score(y_test, y_pred)
-                auc = roc_auc_score(y_test, y_pred)
+                    c.fit(X_test, y_test)
+                    y_pred = c.predict(X_train)
+                prec = precision_score(y_train, y_pred, average='weighted')
+                rec = recall_score(y_train, y_pred, average='weighted')
+                f1 = f1_score(y_train, y_pred, average='weighted')
+                acc = accuracy_score(y_train, y_pred)
+                auc = roc_auc_score(y_train, y_pred)
                 metrics_to_csv[m][n].loc[i] = [prec, rec, f1, acc, auc]
                 if i == 0:
-                    Path('Results/HuriTest/').mkdir(parents=True, exist_ok=True)
-                    metrics_to_csv[m][n].to_csv('Results/HuriTest/'+t+'metrics_'+m+n+'.csv', index=False)
+                    Path('../Results/30_04Test/HuriTest/').mkdir(parents=True, exist_ok=True)
+                    metrics_to_csv[m][n].to_csv('../Results/30_04Test/HuriTest/'+t+'metrics_'+m+n+'.csv', index=False)
             
         
 

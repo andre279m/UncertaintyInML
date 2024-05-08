@@ -16,23 +16,23 @@ def get_classifiers():
     ]
     return classifiers
 
-embedCSV = pd.read_csv('DB/HuriTest/embeddings_train.csv',index_col=0)
+embedCSV = pd.read_csv('../DB/HuriTest/embeddings_train.csv',index_col=0)
 embeddings_array = np.array(list(embedCSV.values))
 dict_embeddings = {embedCSV.index[i]: embeddings_array[i] for i in range(len(embeddings_array))}
 vector_size = embedCSV.shape[1]
 
-for t in ['Uniform','Static','Growing']:
+for t in ['Undersampling']:
     logging.info("Starting training with " + t + " dataset")
     for i in range(800, -1, -200):
         logging.info("Starting training with threshold: " + str(i))
         metrics_to_csv = {}
         for f in range(10):
             logging.info("Starting training with fold: " + str(f))
-            X_train1 = np.loadtxt('DB/'+t+'/T'+str(i)+'/X_train_Fold'+str(f)+'.csv', delimiter=',',dtype=str)
-            y_train = np.loadtxt('DB/'+t+'/T'+str(i)+'/y_train_Fold'+str(f)+'.csv', delimiter=',')
-            X_test1 = np.loadtxt('DB/'+t+'/T'+str(i)+'/X_test_Fold'+str(f)+'.csv', delimiter=',',dtype=str)
-            y_test = np.loadtxt('DB/'+t+'/T'+str(i)+'/y_test_Fold'+str(f)+'.csv', delimiter=',')
-            sample_weight = np.loadtxt('DB/'+t+'/T'+str(i)+'/sample_weight_train_Fold'+str(f)+'.csv', delimiter=',')
+            X_train1 = np.loadtxt('../DB/'+t+'/T'+str(i)+'/X_train_Fold'+str(f)+'.csv', delimiter=',',dtype=str)
+            y_train = np.loadtxt('../DB/'+t+'/T'+str(i)+'/y_train_Fold'+str(f)+'.csv', delimiter=',')
+            X_test1 = np.loadtxt('../DB/'+t+'/T'+str(i)+'/X_test_Fold'+str(f)+'.csv', delimiter=',',dtype=str)
+            y_test = np.loadtxt('../DB/'+t+'/T'+str(i)+'/y_test_Fold'+str(f)+'.csv', delimiter=',')
+            sample_weight = np.loadtxt('../DB/'+t+'/T'+str(i)+'/sample_weight_train_Fold'+str(f)+'.csv', delimiter=',')
 
             X_train = []
             for prot1, prot2 in X_train1:
@@ -81,6 +81,6 @@ for t in ['Uniform','Static','Growing']:
                     auc = roc_auc_score(y_test, y_pred)
                     metrics_to_csv[m][n].loc[len(metrics_to_csv[m][n].index)] = [prec, rec, f1, acc, auc]
                     if f == 9:
-                        Path('Results/22_03Test/Folds/').mkdir(parents=True, exist_ok=True)
-                        metrics_to_csv[m][n].to_csv('Results/22_03Test/Folds/'+t+'T'+str(i)+'metrics_'+m+n+'.csv', index=False)
+                        Path('../Results/30_04Test/Folds/').mkdir(parents=True, exist_ok=True)
+                        metrics_to_csv[m][n].to_csv('../Results/30_04Test/Folds/'+t+'T'+str(i)+'metrics_'+m+n+'.csv', index=False)
                 

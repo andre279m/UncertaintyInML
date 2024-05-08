@@ -90,7 +90,6 @@ for prot1, prot2, label in negative_pairs_prots:
 
 metrics_to_csv = pd.DataFrame(columns=['precision', 'recall', 'WAF','accuracy','AUC'])
 
-
 # Creating training set and test set
 skf = StratifiedKFold(n_splits=10, random_state=42, shuffle=True)
 X, y = np.array(X), np.array(y)
