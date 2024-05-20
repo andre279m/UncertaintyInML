@@ -21,7 +21,7 @@ embeddings_array = np.array(list(embedCSV.values))
 dict_embeddings = {embedCSV.index[i]: embeddings_array[i] for i in range(len(embeddings_array))}
 vector_size = embedCSV.shape[1]
 
-for t in ['Undersampling']:
+for t in ['Undersampling', 'Uniform']: # Growing Static
     logging.info("Starting training with " + t + " dataset")
     for i in range(800, -1, -200):
         logging.info("Starting training with threshold: " + str(i))
@@ -33,7 +33,7 @@ for t in ['Undersampling']:
             X_test1 = np.loadtxt('../DB/'+t+'/T'+str(i)+'/X_test_Fold'+str(f)+'.csv', delimiter=',',dtype=str)
             y_test = np.loadtxt('../DB/'+t+'/T'+str(i)+'/y_test_Fold'+str(f)+'.csv', delimiter=',')
             sample_weight = np.loadtxt('../DB/'+t+'/T'+str(i)+'/sample_weight_train_Fold'+str(f)+'.csv', delimiter=',')
-
+            sample_weight = np.array([int(val/10) for val in sample_weight])
             X_train = []
             for prot1, prot2 in X_train1:
                 prot1 = 'https://string-db.org/network/9606.ENSP' + prot1
@@ -54,7 +54,7 @@ for t in ['Undersampling']:
 
             X_train = np.array(X_train)
             X_test = np.array(X_test)
-            for m in ['PU','Normal','Weighted']:
+            for m in ['Weighted']:# 'PU','Normal',
                 if m not in metrics_to_csv:
                     metrics_to_csv[m] = {}
                 logging.info("Starting training with model: " + m)
@@ -81,6 +81,6 @@ for t in ['Undersampling']:
                     auc = roc_auc_score(y_test, y_pred)
                     metrics_to_csv[m][n].loc[len(metrics_to_csv[m][n].index)] = [prec, rec, f1, acc, auc]
                     if f == 9:
-                        Path('../Results/30_04Test/Folds/').mkdir(parents=True, exist_ok=True)
-                        metrics_to_csv[m][n].to_csv('../Results/30_04Test/Folds/'+t+'T'+str(i)+'metrics_'+m+n+'.csv', index=False)
+                        Path('../Results/18_05Test/Folds/').mkdir(parents=True, exist_ok=True)
+                        metrics_to_csv[m][n].to_csv('../Results/18_05Test/Folds/'+t+'T'+str(i)+'metrics_'+m+n+'.csv', index=False)
                 
