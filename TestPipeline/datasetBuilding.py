@@ -21,7 +21,7 @@ data_full = pd.read_csv(protein_full_links_file_path, sep=" ", header=0)
 data_full = data_full[data_full["protein1"].isin(prots) & data_full["protein2"].isin(prots)].sort_values(by=['combined_score'], ascending=False).reset_index(drop=True)
 
 mean = data_full['combined_score'].mean()
-mean = mean/1000
+mean = mean
 
 # Creating thresholds
 fulldata8 = data_full[data_full['combined_score'] > 800]
@@ -61,7 +61,7 @@ for i in range(800, -1, -200):
         line = [prot1,prot2]
         X.append(line)
         y.append(1)
-        sample_weight.append(c/1000)
+        sample_weight.append(c)
 
     for prot1, prot2, label in negative_pairs_prots:
         line = [prot1,prot2]
@@ -72,17 +72,17 @@ for i in range(800, -1, -200):
     # Creating training set and test set
     skf = StratifiedKFold(n_splits=10, random_state=42, shuffle=True)
     X, y ,sample_weight = np.array(X), np.array(y), np.array(sample_weight)
-    Path('DB/Static/T'+str(i)+'/').mkdir(parents=True, exist_ok=True)
+    Path('../DB/Static/T'+str(i)+'/').mkdir(parents=True, exist_ok=True)
     for j, (train_index, test_index) in enumerate(skf.split(X, y)):
         X_train, X_test = X[train_index], X[test_index]
         y_train, y_test = y[train_index], y[test_index]
         sample_weight_train = sample_weight[train_index]
         logging.info("Writing dataset with threshold: " + str(i) + " and fold: " + str(j))
-        np.savetxt('DB/Static/T'+str(i)+'/X_train_Fold'+str(j)+'.csv', X_train, delimiter=',',fmt='%s')
-        np.savetxt('DB/Static/T'+str(i)+'/X_test_Fold'+str(j)+'.csv', X_test, delimiter=',',fmt='%s')
-        np.savetxt('DB/Static/T'+str(i)+'/y_train_Fold'+str(j)+'.csv', y_train, delimiter=',')
-        np.savetxt('DB/Static/T'+str(i)+'/y_test_Fold'+str(j)+'.csv', y_test, delimiter=',')
-        np.savetxt('DB/Static/T'+str(i)+'/sample_weight_train_Fold'+str(j)+'.csv', sample_weight_train, delimiter=',')
+        np.savetxt('../DB/Static/T'+str(i)+'/X_train_Fold'+str(j)+'.csv', X_train, delimiter=',',fmt='%s')
+        np.savetxt('../DB/Static/T'+str(i)+'/X_test_Fold'+str(j)+'.csv', X_test, delimiter=',',fmt='%s')
+        np.savetxt('../DB/Static/T'+str(i)+'/y_train_Fold'+str(j)+'.csv', y_train, delimiter=',')
+        np.savetxt('../DB/Static/T'+str(i)+'/y_test_Fold'+str(j)+'.csv', y_test, delimiter=',')
+        np.savetxt('../DB/Static/T'+str(i)+'/sample_weight_train_Fold'+str(j)+'.csv', sample_weight_train, delimiter=',')
 
 logging.info("Starting Growing dataset building...")
 
@@ -111,7 +111,7 @@ for i in range(800, -1, -200):
         line = [prot1,prot2]
         X.append(line)
         y.append(1)
-        sample_weight.append(c/1000)
+        sample_weight.append(c)
 
     for prot1, prot2, label in negative_pairs_prots:
         line = [prot1,prot2]
@@ -122,17 +122,17 @@ for i in range(800, -1, -200):
     # Creating training set and test set
     skf = StratifiedKFold(n_splits=10, random_state=42, shuffle=True)
     X, y ,sample_weight = np.array(X), np.array(y), np.array(sample_weight)
-    Path('DB/Growing/T'+str(i)+'/').mkdir(parents=True, exist_ok=True)
+    Path('../DB/Growing/T'+str(i)+'/').mkdir(parents=True, exist_ok=True)
     for j, (train_index, test_index) in enumerate(skf.split(X, y)):
         X_train, X_test = X[train_index], X[test_index]
         y_train, y_test = y[train_index], y[test_index]
         sample_weight_train = sample_weight[train_index]
         logging.info("Writing dataset with threshold: " + str(i) + " and fold: " + str(j))
-        np.savetxt('DB/Growing/T'+str(i)+'/X_train_Fold'+str(j)+'.csv', X_train, delimiter=',',fmt='%s')
-        np.savetxt('DB/Growing/T'+str(i)+'/X_test_Fold'+str(j)+'.csv', X_test, delimiter=',',fmt='%s')
-        np.savetxt('DB/Growing/T'+str(i)+'/y_train_Fold'+str(j)+'.csv', y_train, delimiter=',')
-        np.savetxt('DB/Growing/T'+str(i)+'/y_test_Fold'+str(j)+'.csv', y_test, delimiter=',')
-        np.savetxt('DB/Growing/T'+str(i)+'/sample_weight_train_Fold'+str(j)+'.csv', sample_weight_train, delimiter=',')
+        np.savetxt('../DB/Growing/T'+str(i)+'/X_train_Fold'+str(j)+'.csv', X_train, delimiter=',',fmt='%s')
+        np.savetxt('../DB/Growing/T'+str(i)+'/X_test_Fold'+str(j)+'.csv', X_test, delimiter=',',fmt='%s')
+        np.savetxt('../DB/Growing/T'+str(i)+'/y_train_Fold'+str(j)+'.csv', y_train, delimiter=',')
+        np.savetxt('../DB/Growing/T'+str(i)+'/y_test_Fold'+str(j)+'.csv', y_test, delimiter=',')
+        np.savetxt('../DB/Growing/T'+str(i)+'/sample_weight_train_Fold'+str(j)+'.csv', sample_weight_train, delimiter=',')
 
 logging.info("Starting Uniform dataset building...")
 
@@ -165,7 +165,7 @@ for i in range(800, -1, -200):
         line = [prot1,prot2]
         X.append(line)
         y.append(1)
-        sample_weight.append(c/1000)
+        sample_weight.append(4*c)
 
     for prot1, prot2, label in negative_pairs_prots:
         line = [prot1,prot2]
@@ -176,17 +176,17 @@ for i in range(800, -1, -200):
     # Creating training set and test set
     skf = StratifiedKFold(n_splits=10, random_state=42, shuffle=True)
     X, y ,sample_weight = np.array(X), np.array(y), np.array(sample_weight)
-    Path('DB/Uniform/T'+str(i)+'/').mkdir(parents=True, exist_ok=True)
+    Path('../DB/Uniform/T'+str(i)+'/').mkdir(parents=True, exist_ok=True)
     for j, (train_index, test_index) in enumerate(skf.split(X, y)):
         X_train, X_test = X[train_index], X[test_index]
         y_train, y_test = y[train_index], y[test_index]
         sample_weight_train = sample_weight[train_index]
         logging.info("Writing dataset with threshold: " + str(i) + " and fold: " + str(j))
-        np.savetxt('DB/Uniform/T'+str(i)+'/X_train_Fold'+str(j)+'.csv', X_train, delimiter=',',fmt='%s')
-        np.savetxt('DB/Uniform/T'+str(i)+'/X_test_Fold'+str(j)+'.csv', X_test, delimiter=',',fmt='%s')
-        np.savetxt('DB/Uniform/T'+str(i)+'/y_train_Fold'+str(j)+'.csv', y_train, delimiter=',')
-        np.savetxt('DB/Uniform/T'+str(i)+'/y_test_Fold'+str(j)+'.csv', y_test, delimiter=',')
-        np.savetxt('DB/Uniform/T'+str(i)+'/sample_weight_train_Fold'+str(j)+'.csv', sample_weight_train, delimiter=',')
+        np.savetxt('../DB/Uniform/T'+str(i)+'/X_train_Fold'+str(j)+'.csv', X_train, delimiter=',',fmt='%s')
+        np.savetxt('../DB/Uniform/T'+str(i)+'/X_test_Fold'+str(j)+'.csv', X_test, delimiter=',',fmt='%s')
+        np.savetxt('../DB/Uniform/T'+str(i)+'/y_train_Fold'+str(j)+'.csv', y_train, delimiter=',')
+        np.savetxt('../DB/Uniform/T'+str(i)+'/y_test_Fold'+str(j)+'.csv', y_test, delimiter=',')
+        np.savetxt('../DB/Uniform/T'+str(i)+'/sample_weight_train_Fold'+str(j)+'.csv', sample_weight_train, delimiter=',')
 
 
 logging.info("Starting UnderSampled dataset building...")
@@ -220,7 +220,7 @@ for i in range(800, -1, -200):
         line = [prot1,prot2]
         X.append(line)
         y.append(1)
-        sample_weight.append(c/1000)
+        sample_weight.append(c)
 
     for prot1, prot2, label in negative_pairs_prots:
         line = [prot1,prot2]
