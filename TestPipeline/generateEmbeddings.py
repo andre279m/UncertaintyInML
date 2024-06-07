@@ -3,16 +3,15 @@ from pyrdf2vec.graphs import kg
 from pyrdf2vec.rdf2vec import RDF2VecTransformer
 from pyrdf2vec.embedders import Word2Vec
 from pyrdf2vec.samplers import UniformSampler, ObjFreqSampler, PredFreqSampler
-from pyrdf2vec.walkers import RandomWalker, WalkletWalker
-from pyrdf2vec.walkers.weisfeiler_lehman import WLWalker
+from pyrdf2vec.walkers import RandomWalker, WalkletWalker, WeisfeilerLehmanWalker
 import pandas as pd
 import logging
 logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s',level = logging.INFO,datefmt='%Y-%m-%d %H:%M:%S')
 
 
-gene_ontology_file_path = 'DB/go.owl'
-protein_file_path = 'DB/9606.protein.enrichment.terms.v12.0.txt'
-gene_ontology_annotated_file_path = 'DB/go_annotated.owl'
+gene_ontology_file_path = '../DB/go.owl'
+protein_file_path = '../DB/9606.protein.enrichment.terms.v12.0.txt'
+gene_ontology_annotated_file_path = '../DB/go_annotated.owl'
 
 logging.info("Loading Gene Ontology")
 
@@ -37,10 +36,9 @@ with open(protein_file_path , 'r') as prot_annot:
 
 logging.info("Starting training with HuRI annotations")
 
-# TODO: Add the protein links to the graph
-huri_pairs = pd.read_csv('DB/HuriTest/HuRI.tsv', sep = '\t',header=None,names=['protein1', 'protein2'])
-mappings = pd.read_csv('DB/HuriTest/idmapping_2024_03_15.tsv',sep='\t', header=0)
-annotations_file_path = 'DB/HuriTest/goa_human.gaf'
+huri_pairs = pd.read_csv('../DB/HuriTest/HuRI.tsv', sep = '\t',header=None,names=['protein1', 'protein2'])
+mappings = pd.read_csv('../DB/HuriTest/idmapping_2024_03_15.tsv',sep='\t', header=0)
+annotations_file_path = '../DB/HuriTest/goa_human.gaf'
 
 prot_maps = {}
 
@@ -65,9 +63,9 @@ with open(annotations_file_path , 'r') as file_annot:
 
 logging.info("Saving Knowledge Graph")
 
-g.serialize(destination='DB/go_annotated2.owl', format='xml')
+# g.serialize(destination='DB/go_annotated2.owl', format='xml')
 
-del g
+# del g
 del prot_maps
 del huri_pairs
 del mappings
@@ -93,7 +91,7 @@ sampler_type = 'uniform'
 #     g_pyrdf2vec.add_edge(s_v, p_v)
 #     g_pyrdf2vec.add_edge(p_v, o_v)
 
-g_pyrdf2vec = kg.KG("DB/go_annotated2.owl", mul_req=True)
+g_pyrdf2vec = kg.rdflib_to_kg(g)
 
 # Defining the word2vec strategy
 if type_word2vec == 'CBOW':
@@ -111,21 +109,22 @@ elif sampler_type.lower() == 'objfreq':
 
 # Defining walker strategy
 if walker_type.lower() == 'random':
-    walker = RandomWalker(depth=walk_depth, walks_per_graph=n_walks, sampler = sampler, n_jobs = -1)
+    walker = RandomWalker(depth=walk_depth, walks_per_graph=n_walks, sampler = sampler)
 elif walker_type.lower() == 'wl':
-#    walker = WeisfeilerLehmanWalker(depth=walk_depth, walks_per_graph=n_walks, sampler = sampler, n_jobs = -1)
-    walker = WLWalker(max_depth=walk_depth, max_walks=n_walks, sampler = sampler, n_jobs = -1)
+    walker = WeisfeilerLehmanWalker(depth=walk_depth, walks_per_graph=n_walks, sampler = sampler)
+#    walker = WLWalker(max_depth=walk_depth, max_walks=n_walks, sampler = sampler, n_jobs = -1)
 elif walker_type.lower() == 'walklet':
-    walker = WalkletWalker(depth=walk_depth, walks_per_graph=n_walks, sampler = sampler, n_jobs = -1)
+    walker = WalkletWalker(depth=walk_depth, walks_per_graph=n_walks, sampler = sampler)
 
 # testing RDF2Vec embeddings
-transformer = RDF2VecTransformer(Word2Vec(vector_size = vector_size,sg=sg_value), walkers=[walker], verbose=True, n_jobs = -1)
+transformer = RDF2VecTransformer(Word2Vec(size = vector_size,sg=sg_value), walkers=[walker])
 
 prots_train = list(prots_train)
 prots_test = list(prots_test)
 all_prots = prots_train + prots_test
 
 logging.info("Starting training with RDF2Vec")
+k = len(prots_train)
 
 # Generating the embeddings
 embeddings = transformer.fit_transform(g_pyrdf2vec, all_prots)
@@ -133,10 +132,12 @@ logging.info("Embeddings generated")
 del g_pyrdf2vec
 del all_prots
 dict_embeddings_train = {prots_train[i]: embeddings[i] for i in range(len(prots_train))}
-dict_embeddings_train.to_csv('DB/HuriTest/embeddings_train.csv', index=True)
+dict_embeddings_train = pd.DataFrame.from_dict(dict_embeddings_train, orient='index')
+dict_embeddings_train.to_csv('../DB/HuriTest/embeddings_train.csv')
 del dict_embeddings_train
 del prots_train
-dict_embeddings_test = {prots_test[i]: embeddings[i] for i in range(len(prots_test))}
-dict_embeddings_test.to_csv('DB/HuriTest/embeddings_test.csv', index=True)
+dict_embeddings_test = {prots_test[i]: embeddings[k+i] for i in range(len(prots_test))}
+dict_embeddings_test = pd.DataFrame.from_dict(dict_embeddings_test, orient='index')
+dict_embeddings_test.to_csv('../DB/HuriTest/embeddings_test.csv')
 
 logging.info("Finished training with RDF2Vec")

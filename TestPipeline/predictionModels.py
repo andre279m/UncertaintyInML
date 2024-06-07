@@ -7,7 +7,7 @@ from catboost import CatBoostClassifier
 import numpy as np
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score
 import pandas as pd
-from pulearn import ElkanotoPuClassifier
+# from pulearn import ElkanotoPuClassifier
 import logging
 from pathlib import Path
 
@@ -35,7 +35,7 @@ for t in ['Growing', 'Static', 'Undersampling', 'Uniform']: #
     for i in range(800, -1, -200):
         logging.info("Starting training with threshold: " + str(i))
         metrics_to_csv = {}
-        for f in range(3):
+        for f in range(10):
             logging.info("Starting training with fold: " + str(f))
             X_train1 = np.loadtxt('../DB/'+t+'/T'+str(i)+'/X_train_Fold'+str(f)+'.csv', delimiter=',',dtype=str)
             y_train = np.loadtxt('../DB/'+t+'/T'+str(i)+'/y_train_Fold'+str(f)+'.csv', delimiter=',')
@@ -63,7 +63,7 @@ for t in ['Growing', 'Static', 'Undersampling', 'Uniform']: #
 
             X_train = np.array(X_train)
             X_test = np.array(X_test)
-            for m in ['Weighted', 'Normal','PU']: #
+            for m in ['Weighted', 'Normal']: # ,'PU'
                 if m not in metrics_to_csv:
                     metrics_to_csv[m] = {}
                 logging.info("Starting training with model: " + m)
@@ -75,11 +75,11 @@ for t in ['Growing', 'Static', 'Undersampling', 'Uniform']: #
                     if m == 'Weighted':
                         c.fit(X_train, y_train, sample_weight = sample_weight)
                         y_pred = c.predict(X_test)
-                    elif m == 'PU':
-                        pu = ElkanotoPuClassifier(estimator = c, hold_out_ratio = 0.1)
-                        y_train_pu = np.where(y_train == 0, -1, y_train)
-                        pu.fit(X_train, y_train)
-                        y_pred = pu.predict(X_test)
+                    # elif m == 'PU':
+                    #     pu = ElkanotoPuClassifier(estimator = c, hold_out_ratio = 0.1)
+                    #     y_train_pu = np.where(y_train == 0, -1, y_train)
+                    #     pu.fit(X_train, y_train)
+                    #     y_pred = pu.predict(X_test)
                     else:
                         c.fit(X_train, y_train)
                         y_pred = c.predict(X_test)
