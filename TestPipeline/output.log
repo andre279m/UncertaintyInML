@@ -330,3 +330,375 @@
 2024-06-07 14:39:40 INFO     Starting training with fold: 5
 2024-06-07 14:39:52 INFO     Starting training with model: Weighted
 2024-06-07 14:45:46 INFO     Starting training with model: Normal
+2024-06-07 14:50:36 INFO     Starting training with fold: 6
+2024-06-07 14:50:47 INFO     Starting training with model: Weighted
+2024-06-07 14:56:42 INFO     Starting training with model: Normal
+2024-06-07 15:01:30 INFO     Starting training with fold: 7
+2024-06-07 15:01:42 INFO     Starting training with model: Weighted
+2024-06-07 15:07:37 INFO     Starting training with model: Normal
+2024-06-07 15:12:25 INFO     Starting training with fold: 8
+2024-06-07 15:12:37 INFO     Starting training with model: Weighted
+2024-06-07 15:18:29 INFO     Starting training with model: Normal
+2024-06-07 15:23:17 INFO     Starting training with fold: 9
+2024-06-07 15:23:29 INFO     Starting training with model: Weighted
+2024-06-07 15:29:24 INFO     Starting training with model: Normal
+2024-06-07 15:34:13 INFO     Starting training with threshold: 600
+2024-06-07 15:34:13 INFO     Starting training with fold: 0
+2024-06-07 15:34:35 INFO     Starting training with model: Weighted
+2024-06-07 15:45:16 INFO     Starting training with model: Normal
+2024-06-07 15:54:33 INFO     Starting training with fold: 1
+2024-06-07 15:54:55 INFO     Starting training with model: Weighted
+2024-06-07 16:05:38 INFO     Starting training with model: Normal
+2024-06-07 16:14:52 INFO     Starting training with fold: 2
+2024-06-07 16:15:15 INFO     Starting training with model: Weighted
+2024-06-07 16:26:01 INFO     Starting training with model: Normal
+2024-06-07 16:35:16 INFO     Starting training with fold: 3
+2024-06-07 16:35:39 INFO     Starting training with model: Weighted
+2024-06-07 16:46:21 INFO     Starting training with model: Normal
+2024-06-07 16:55:31 INFO     Starting training with fold: 4
+2024-06-07 16:55:53 INFO     Starting training with model: Weighted
+2024-06-07 17:06:37 INFO     Starting training with model: Normal
+2024-06-07 17:15:47 INFO     Starting training with fold: 5
+2024-06-07 17:16:09 INFO     Starting training with model: Weighted
+2024-06-07 17:26:53 INFO     Starting training with model: Normal
+2024-06-07 17:36:06 INFO     Starting training with fold: 6
+2024-06-07 17:36:28 INFO     Starting training with model: Weighted
+2024-06-07 17:47:09 INFO     Starting training with model: Normal
+2024-06-07 17:56:20 INFO     Starting training with fold: 7
+2024-06-07 17:56:43 INFO     Starting training with model: Weighted
+2024-06-07 18:07:25 INFO     Starting training with model: Normal
+2024-06-07 18:16:34 INFO     Starting training with fold: 8
+2024-06-07 18:16:56 INFO     Starting training with model: Weighted
+2024-06-07 18:27:43 INFO     Starting training with model: Normal
+2024-06-07 18:36:54 INFO     Starting training with fold: 9
+2024-06-07 18:37:16 INFO     Starting training with model: Weighted
+2024-06-07 18:47:56 INFO     Starting training with model: Normal
+2024-06-07 18:57:09 INFO     Starting training with threshold: 400
+2024-06-07 18:57:09 INFO     Starting training with fold: 0
+2024-06-07 18:57:38 INFO     Starting training with model: Weighted
+2024-06-07 19:11:49 INFO     Starting training with model: Normal
+2024-06-07 19:24:24 INFO     Starting training with fold: 1
+2024-06-07 19:24:55 INFO     Starting training with model: Weighted
+2024-06-07 19:39:05 INFO     Starting training with model: Normal
+2024-06-07 19:51:51 INFO     Starting training with fold: 2
+2024-06-07 19:52:21 INFO     Starting training with model: Weighted
+2024-06-07 20:06:35 INFO     Starting training with model: Normal
+2024-06-07 20:19:11 INFO     Starting training with fold: 3
+2024-06-07 20:19:41 INFO     Starting training with model: Weighted
+2024-06-07 20:33:55 INFO     Starting training with model: Normal
+2024-06-07 20:46:33 INFO     Starting training with fold: 4
+2024-06-07 20:47:04 INFO     Starting training with model: Weighted
+2024-06-07 21:01:19 INFO     Starting training with model: Normal
+2024-06-07 21:13:56 INFO     Starting training with fold: 5
+2024-06-07 21:14:26 INFO     Starting training with model: Weighted
+2024-06-07 21:28:41 INFO     Starting training with model: Normal
+2024-06-07 21:41:21 INFO     Starting training with fold: 6
+2024-06-07 21:41:51 INFO     Starting training with model: Weighted
+2024-06-07 21:56:11 INFO     Starting training with model: Normal
+2024-06-07 22:08:47 INFO     Starting training with fold: 7
+2024-06-07 22:09:17 INFO     Starting training with model: Weighted
+2024-06-07 22:23:36 INFO     Starting training with model: Normal
+2024-06-07 22:36:11 INFO     Starting training with fold: 8
+2024-06-07 22:36:41 INFO     Starting training with model: Weighted
+2024-06-07 22:50:55 INFO     Starting training with model: Normal
+2024-06-07 23:03:32 INFO     Starting training with fold: 9
+2024-06-07 23:04:01 INFO     Starting training with model: Weighted
+2024-06-07 23:18:16 INFO     Starting training with model: Normal
+2024-06-07 23:30:55 INFO     Starting training with threshold: 200
+2024-06-07 23:30:55 INFO     Starting training with fold: 0
+2024-06-07 23:31:32 INFO     Starting training with model: Weighted
+2024-06-07 23:47:53 INFO     Starting training with model: Normal
+2024-06-08 00:02:47 INFO     Starting training with fold: 1
+2024-06-08 00:03:24 INFO     Starting training with model: Weighted
+2024-06-08 00:19:48 INFO     Starting training with model: Normal
+2024-06-08 00:34:41 INFO     Starting training with fold: 2
+2024-06-08 00:35:14 INFO     Starting training with model: Weighted
+2024-06-08 00:51:37 INFO     Starting training with model: Normal
+2024-06-08 01:06:35 INFO     Starting training with fold: 3
+2024-06-08 01:07:11 INFO     Starting training with model: Weighted
+2024-06-08 01:23:32 INFO     Starting training with model: Normal
+2024-06-08 01:38:24 INFO     Starting training with fold: 4
+2024-06-08 01:39:00 INFO     Starting training with model: Weighted
+2024-06-08 01:55:21 INFO     Starting training with model: Normal
+2024-06-08 02:10:14 INFO     Starting training with fold: 5
+2024-06-08 02:10:49 INFO     Starting training with model: Weighted
+2024-06-08 02:27:20 INFO     Starting training with model: Normal
+2024-06-08 02:42:16 INFO     Starting training with fold: 6
+2024-06-08 02:42:51 INFO     Starting training with model: Weighted
+2024-06-08 02:59:25 INFO     Starting training with model: Normal
+2024-06-08 03:14:19 INFO     Starting training with fold: 7
+2024-06-08 03:14:53 INFO     Starting training with model: Weighted
+2024-06-08 03:31:26 INFO     Starting training with model: Normal
+2024-06-08 03:46:30 INFO     Starting training with fold: 8
+2024-06-08 03:47:04 INFO     Starting training with model: Weighted
+2024-06-08 04:03:30 INFO     Starting training with model: Normal
+2024-06-08 04:18:24 INFO     Starting training with fold: 9
+2024-06-08 04:18:59 INFO     Starting training with model: Weighted
+2024-06-08 04:35:19 INFO     Starting training with model: Normal
+2024-06-08 04:50:13 INFO     Starting training with threshold: 0
+2024-06-08 04:50:13 INFO     Starting training with fold: 0
+2024-06-08 04:50:50 INFO     Starting training with model: Weighted
+2024-06-08 05:08:37 INFO     Starting training with model: Normal
+2024-06-08 05:24:36 INFO     Starting training with fold: 1
+2024-06-08 05:25:14 INFO     Starting training with model: Weighted
+2024-06-08 05:42:42 INFO     Starting training with model: Normal
+2024-06-08 05:58:44 INFO     Starting training with fold: 2
+2024-06-08 05:59:22 INFO     Starting training with model: Weighted
+2024-06-08 06:17:01 INFO     Starting training with model: Normal
+2024-06-08 06:33:01 INFO     Starting training with fold: 3
+2024-06-08 06:33:38 INFO     Starting training with model: Weighted
+2024-06-08 06:51:09 INFO     Starting training with model: Normal
+2024-06-08 07:07:08 INFO     Starting training with fold: 4
+2024-06-08 07:07:45 INFO     Starting training with model: Weighted
+2024-06-08 07:25:18 INFO     Starting training with model: Normal
+2024-06-08 07:41:17 INFO     Starting training with fold: 5
+2024-06-08 07:41:54 INFO     Starting training with model: Weighted
+2024-06-08 07:59:32 INFO     Starting training with model: Normal
+2024-06-08 08:15:31 INFO     Starting training with fold: 6
+2024-06-08 08:16:09 INFO     Starting training with model: Weighted
+2024-06-08 08:33:50 INFO     Starting training with model: Normal
+2024-06-08 08:49:52 INFO     Starting training with fold: 7
+2024-06-08 08:50:30 INFO     Starting training with model: Weighted
+2024-06-08 09:08:01 INFO     Starting training with model: Normal
+2024-06-08 09:24:03 INFO     Starting training with fold: 8
+2024-06-08 09:24:41 INFO     Starting training with model: Weighted
+2024-06-08 09:42:34 INFO     Starting training with model: Normal
+2024-06-08 09:58:27 INFO     Starting training with fold: 9
+2024-06-08 09:59:05 INFO     Starting training with model: Weighted
+2024-06-08 10:16:32 INFO     Starting training with model: Normal
+2024-06-08 10:32:25 INFO     Starting training with Uniform dataset
+2024-06-08 10:32:25 INFO     Starting training with threshold: 800
+2024-06-08 10:32:25 INFO     Starting training with fold: 0
+2024-06-08 10:32:36 INFO     Starting training with model: Weighted
+2024-06-08 10:41:43 INFO     Starting training with model: Normal
+2024-06-08 10:46:31 INFO     Starting training with fold: 1
+2024-06-08 10:46:43 INFO     Starting training with model: Weighted
+2024-06-08 10:55:51 INFO     Starting training with model: Normal
+2024-06-08 11:00:39 INFO     Starting training with fold: 2
+2024-06-08 11:00:51 INFO     Starting training with model: Weighted
+2024-06-08 11:10:01 INFO     Starting training with model: Normal
+2024-06-08 11:14:47 INFO     Starting training with fold: 3
+2024-06-08 11:14:59 INFO     Starting training with model: Weighted
+2024-06-08 11:24:09 INFO     Starting training with model: Normal
+2024-06-08 11:28:57 INFO     Starting training with fold: 4
+2024-06-08 11:29:08 INFO     Starting training with model: Weighted
+2024-06-08 11:38:18 INFO     Starting training with model: Normal
+2024-06-08 11:43:04 INFO     Starting training with fold: 5
+2024-06-08 11:43:16 INFO     Starting training with model: Weighted
+2024-06-08 11:52:27 INFO     Starting training with model: Normal
+2024-06-08 11:57:15 INFO     Starting training with fold: 6
+2024-06-08 11:57:26 INFO     Starting training with model: Weighted
+2024-06-08 12:06:49 INFO     Starting training with model: Normal
+2024-06-08 12:11:37 INFO     Starting training with fold: 7
+2024-06-08 12:11:49 INFO     Starting training with model: Weighted
+2024-06-08 12:21:03 INFO     Starting training with model: Normal
+2024-06-08 12:25:50 INFO     Starting training with fold: 8
+2024-06-08 12:26:02 INFO     Starting training with model: Weighted
+2024-06-08 12:35:16 INFO     Starting training with model: Normal
+2024-06-08 12:40:05 INFO     Starting training with fold: 9
+2024-06-08 12:40:17 INFO     Starting training with model: Weighted
+2024-06-08 12:49:35 INFO     Starting training with model: Normal
+2024-06-08 12:54:23 INFO     Starting training with threshold: 600
+2024-06-08 12:54:23 INFO     Starting training with fold: 0
+2024-06-08 12:54:47 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-08 13:12:55 INFO     Starting training with model: Normal
+2024-06-08 13:23:11 INFO     Starting training with fold: 1
+2024-06-08 13:23:36 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-08 13:41:37 INFO     Starting training with model: Normal
+2024-06-08 13:51:55 INFO     Starting training with fold: 2
+2024-06-08 13:52:20 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-08 14:10:29 INFO     Starting training with model: Normal
+2024-06-08 14:20:44 INFO     Starting training with fold: 3
+2024-06-08 14:21:07 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-08 14:39:10 INFO     Starting training with model: Normal
+2024-06-08 14:49:31 INFO     Starting training with fold: 4
+2024-06-08 14:49:55 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-08 15:08:00 INFO     Starting training with model: Normal
+2024-06-08 15:18:19 INFO     Starting training with fold: 5
+2024-06-08 15:18:44 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-08 15:36:47 INFO     Starting training with model: Normal
+2024-06-08 15:47:04 INFO     Starting training with fold: 6
+2024-06-08 15:47:28 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-08 16:05:27 INFO     Starting training with model: Normal
+2024-06-08 16:15:46 INFO     Starting training with fold: 7
+2024-06-08 16:16:10 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-08 16:34:11 INFO     Starting training with model: Normal
+2024-06-08 16:44:28 INFO     Starting training with fold: 8
+2024-06-08 16:44:54 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-08 17:03:06 INFO     Starting training with model: Normal
+2024-06-08 17:13:23 INFO     Starting training with fold: 9
+2024-06-08 17:13:47 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-08 17:31:53 INFO     Starting training with model: Normal
+2024-06-08 17:42:06 INFO     Starting training with threshold: 400
+2024-06-08 17:42:06 INFO     Starting training with fold: 0
+2024-06-08 17:42:44 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-08 18:08:37 INFO     Starting training with model: Normal
+2024-06-08 18:24:39 INFO     Starting training with fold: 1
+2024-06-08 18:25:17 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-08 18:51:02 INFO     Starting training with model: Normal
+2024-06-08 19:07:10 INFO     Starting training with fold: 2
+2024-06-08 19:07:47 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-08 19:33:28 INFO     Starting training with model: Normal
+2024-06-08 19:49:36 INFO     Starting training with fold: 3
+2024-06-08 19:50:14 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-08 20:16:00 INFO     Starting training with model: Normal
+2024-06-08 20:32:03 INFO     Starting training with fold: 4
+2024-06-08 20:32:42 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-08 20:58:33 INFO     Starting training with model: Normal
+2024-06-08 21:14:40 INFO     Starting training with fold: 5
+2024-06-08 21:15:19 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-08 21:41:07 INFO     Starting training with model: Normal
+2024-06-08 21:57:10 INFO     Starting training with fold: 6
+2024-06-08 21:57:48 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-08 22:23:45 INFO     Starting training with model: Normal
+2024-06-08 22:39:48 INFO     Starting training with fold: 7
+2024-06-08 22:40:25 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-08 23:06:25 INFO     Starting training with model: Normal
+2024-06-08 23:22:25 INFO     Starting training with fold: 8
+2024-06-08 23:23:02 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-08 23:49:03 INFO     Starting training with model: Normal
+2024-06-09 00:05:12 INFO     Starting training with fold: 9
+2024-06-09 00:05:49 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-09 00:31:37 INFO     Starting training with model: Normal
+2024-06-09 00:47:47 INFO     Starting training with threshold: 200
+2024-06-09 00:47:47 INFO     Starting training with fold: 0
+2024-06-09 00:48:37 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-09 01:21:02 INFO     Starting training with model: Normal
+2024-06-09 01:42:46 INFO     Starting training with fold: 1
+2024-06-09 01:43:37 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-09 02:15:55 INFO     Starting training with model: Normal
+2024-06-09 02:37:38 INFO     Starting training with fold: 2
+2024-06-09 02:38:30 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-09 03:10:56 INFO     Starting training with model: Normal
+2024-06-09 03:32:42 INFO     Starting training with fold: 3
+2024-06-09 03:33:30 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-09 04:05:39 INFO     Starting training with model: Normal
+2024-06-09 04:27:33 INFO     Starting training with fold: 4
+2024-06-09 04:28:23 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-09 05:00:25 INFO     Starting training with model: Normal
+2024-06-09 05:22:14 INFO     Starting training with fold: 5
+2024-06-09 05:23:06 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-09 05:55:14 INFO     Starting training with model: Normal
+2024-06-09 06:17:00 INFO     Starting training with fold: 6
+2024-06-09 06:17:52 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-09 06:50:15 INFO     Starting training with model: Normal
+2024-06-09 07:11:56 INFO     Starting training with fold: 7
+2024-06-09 07:12:44 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-09 07:44:55 INFO     Starting training with model: Normal
+2024-06-09 08:06:44 INFO     Starting training with fold: 8
+2024-06-09 08:07:34 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-09 08:40:10 INFO     Starting training with model: Normal
+2024-06-09 09:01:59 INFO     Starting training with fold: 9
+2024-06-09 09:02:50 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-09 09:35:56 INFO     Starting training with model: Normal
+2024-06-09 09:57:39 INFO     Starting training with threshold: 0
+2024-06-09 09:57:39 INFO     Starting training with fold: 0
+2024-06-09 09:58:42 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-09 10:38:36 INFO     Starting training with model: Normal
+2024-06-09 11:06:56 INFO     Starting training with fold: 1
+2024-06-09 11:08:01 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-09 11:46:32 INFO     Starting training with model: Normal
+2024-06-09 12:14:02 INFO     Starting training with fold: 2
+2024-06-09 12:15:06 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-09 12:53:48 INFO     Starting training with model: Normal
+2024-06-09 13:21:16 INFO     Starting training with fold: 3
+2024-06-09 13:22:21 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-09 14:00:51 INFO     Starting training with model: Normal
+2024-06-09 14:28:48 INFO     Starting training with fold: 4
+2024-06-09 14:29:50 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-09 15:08:05 INFO     Starting training with model: Normal
+2024-06-09 15:35:32 INFO     Starting training with fold: 5
+2024-06-09 15:36:37 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-09 16:15:00 INFO     Starting training with model: Normal
+2024-06-09 16:42:20 INFO     Starting training with fold: 6
+2024-06-09 16:43:24 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-09 17:22:18 INFO     Starting training with model: Normal
+2024-06-09 17:49:37 INFO     Starting training with fold: 7
+2024-06-09 17:50:40 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-09 18:28:56 INFO     Starting training with model: Normal
+2024-06-09 18:56:09 INFO     Starting training with fold: 8
+2024-06-09 18:57:13 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-09 19:36:34 INFO     Starting training with model: Normal
+2024-06-09 20:03:47 INFO     Starting training with fold: 9
+2024-06-09 20:04:52 INFO     Starting training with model: Weighted
+/home/amendes/anaconda3/envs/py311/lib/python3.11/site-packages/sklearn/metrics/_classification.py:1517: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+2024-06-09 20:43:15 INFO     Starting training with model: Normal
