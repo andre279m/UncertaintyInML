@@ -30,7 +30,7 @@ embeddings_array = np.array(list(embedCSV.values))
 dict_embeddings = {embedCSV.index[i]: embeddings_array[i] for i in range(len(embeddings_array))}
 vector_size = embedCSV.shape[1]
 
-for t in ['Growing', 'Static', 'Undersampling', 'Uniform']: #
+for t in ['Static', 'Uniform']: #'Growing', 'Undersampling', 
     logging.info("Starting training with " + t + " dataset")
     for i in range(800, -1, -200):
         logging.info("Starting training with threshold: " + str(i))
@@ -63,7 +63,7 @@ for t in ['Growing', 'Static', 'Undersampling', 'Uniform']: #
 
             X_train = np.array(X_train)
             X_test = np.array(X_test)
-            for m in ['Weighted', 'Normal']: # ,'PU'
+            for m in ['Weighted']: # ,'PU', 'Normal'
                 if m not in metrics_to_csv:
                     metrics_to_csv[m] = {}
                 logging.info("Starting training with model: " + m)
@@ -90,6 +90,6 @@ for t in ['Growing', 'Static', 'Undersampling', 'Uniform']: #
                     auc = roc_auc_score(y_test, y_pred)
                     metrics_to_csv[m][n].loc[len(metrics_to_csv[m][n].index)] = [prec, rec, f1, acc, auc]
                     if f == 9:
-                        Path('../Results/6_06Test/Folds/').mkdir(parents=True, exist_ok=True)
-                        metrics_to_csv[m][n].to_csv('../Results/6_06Test/Folds/'+t+'T'+str(i)+'metrics_'+m+n+'.csv', index=False)
+                        Path('../Results/11_06Test/Folds/').mkdir(parents=True, exist_ok=True)
+                        metrics_to_csv[m][n].to_csv('../Results/11_06Test/Folds/'+t+'T'+str(i)+'metrics_'+m+n+'.csv', index=False)
                 
