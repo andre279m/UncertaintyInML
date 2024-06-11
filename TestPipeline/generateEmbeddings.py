@@ -9,9 +9,8 @@ import logging
 logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s',level = logging.INFO,datefmt='%Y-%m-%d %H:%M:%S')
 
 
-gene_ontology_file_path = '../DB/go.owl'
-protein_file_path = '../DB/9606.protein.enrichment.terms.v12.0.txt'
-gene_ontology_annotated_file_path = '../DB/go_annotated.owl'
+gene_ontology_file_path = '../DB/go-plus.owl'
+#protein_file_path = '../DB/9606.protein.enrichment.terms.v12.0.txt'
 
 logging.info("Loading Gene Ontology")
 
@@ -22,53 +21,63 @@ prots_train, prots_test = set(), set()
 
 logging.info("Starting training with GO annotations")
 
-with open(protein_file_path , 'r') as prot_annot:
-    prot_annot.readline()
-    for line in prot_annot:
-        elements_annot = line.split('\t')
-        id_prot, GO_term = elements_annot[0], elements_annot[2]
-        if GO_term.startswith('GO:') :
-            url_GO_term = 'http://purl.obolibrary.org/obo/GO_' + GO_term.split(':')[1]
-            url_prot = 'https://string-db.org/network/' + id_prot
-            if url_prot not in prots_train:
-               prots_train.add(url_prot)
-            g.add((rdflib.term.URIRef(url_prot), rdflib.term.URIRef('http://purl.obolibrary.org/obo/go.owl#has_function') , rdflib.term.URIRef(url_GO_term)))
+# with open(protein_file_path , 'r') as prot_annot:
+#     prot_annot.readline()
+#     for line in prot_annot:
+#         elements_annot = line.split('\t')
+#         id_prot, GO_term = elements_annot[0], elements_annot[2]
+#         if GO_term.startswith('GO:') :
+#             url_GO_term = 'http://purl.obolibrary.org/obo/GO_' + GO_term.split(':')[1]
+#             url_prot = 'https://string-db.org/network/' + id_prot
+#             if url_prot not in prots_train:
+#                prots_train.add(url_prot)
+#             g.add((rdflib.term.URIRef(url_prot), rdflib.term.URIRef('http://purl.obolibrary.org/obo/go.owl#has_function') , rdflib.term.URIRef(url_GO_term)))
 
-logging.info("Starting training with HuRI annotations")
+# logging.info("Starting training with HuRI annotations")
 
-huri_pairs = pd.read_csv('../DB/HuriTest/HuRI.tsv', sep = '\t',header=None,names=['protein1', 'protein2'])
-mappings = pd.read_csv('../DB/HuriTest/idmapping_2024_03_15.tsv',sep='\t', header=0)
+mappingsHuRI = pd.read_csv('../DB/HuriTest/idmapping_2024_06_11HuRI.tsv',sep='\t', header=0)
+mappingsSTRING = pd.read_csv('../DB/idmapping_2024_06_11STRING.tsv',sep='\t', header=0)
 annotations_file_path = '../DB/HuriTest/goa_human.gaf'
 
-prot_maps = {}
+prot_maps_HuRI, prot_maps_STRING = {}, {}
 
-for mapping in mappings.values:
-    if mapping[1] in prot_maps:
-        prot_maps[mapping[1]].append(mapping[0])
+for mapping in mappingsHuRI.values:
+    if mapping[1] in prot_maps_HuRI:
+        prot_maps_HuRI[mapping[1]].append(mapping[0])
     else:
-        prot_maps[mapping[1]] = [mapping[0]]
+        prot_maps_HuRI[mapping[1]] = [mapping[0]]
+
+for mapping in mappingsSTRING.values:
+    if mapping[1] in prot_maps_STRING:
+        prot_maps_STRING[mapping[1]].append(mapping[0])
+    else:
+        prot_maps_STRING[mapping[1]] = [mapping[0]]
 
 with open(annotations_file_path , 'r') as file_annot:
     for line in file_annot:
         elements_annot = line.split('\t')
         id_prot, GO_term = elements_annot[1], elements_annot[4]
-        if id_prot in prot_maps.keys():
-            for prot in prot_maps[id_prot]:
-                url_GO_term = 'http://purl.obolibrary.org/obo/GO_' + GO_term.split(':')[1]
+        url_GO_term = 'http://purl.obolibrary.org/obo/GO_' + GO_term.split(':')[1]
+        if id_prot in prot_maps_HuRI.keys():
+            for prot in prot_maps_HuRI[id_prot]:
                 # url_prot = 'http://www.uniprot.org/uniprot/' + id_prot
                 url_ensembl = 'http:/www.ensembl.org/Homo_sapiens/Location/View?r=' + prot # coordinates like -> ENSG00000012048
                 if url_ensembl not in prots_test:
                     prots_test.add(url_ensembl)
                 g.add((rdflib.term.URIRef(url_ensembl), rdflib.term.URIRef('http://purl.obolibrary.org/obo/go.owl#has_function') , rdflib.term.URIRef(url_GO_term)))
+        if id_prot in prot_maps_STRING.keys():
+            for prot in prot_maps_STRING[id_prot]:
+                url_prot = 'https://string-db.org/network/' + id_prot
+                if url_prot not in prots_train:
+                    prots_train.add(url_prot)
+                g.add((rdflib.term.URIRef(url_prot), rdflib.term.URIRef('http://purl.obolibrary.org/obo/go.owl#has_function') , rdflib.term.URIRef(url_GO_term)))
 
 logging.info("Saving Knowledge Graph")
 
 # g.serialize(destination='DB/go_annotated2.owl', format='xml')
 
 # del g
-del prot_maps
-del huri_pairs
-del mappings
+del prot_maps_HuRI
 
 # Defining rdf2vec paramenters
 vector_size = 200
