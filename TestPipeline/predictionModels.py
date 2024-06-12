@@ -7,7 +7,7 @@ from catboost import CatBoostClassifier
 import numpy as np
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score
 import pandas as pd
-# from pulearn import ElkanotoPuClassifier
+from pulearn import ElkanotoPuClassifier
 import logging
 from pathlib import Path
 
@@ -16,12 +16,12 @@ logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s',level = log
 def get_classifiers():
     classifiers = [
         RandomForestClassifier(n_jobs=-1, random_state=42),
-        # XGBClassifier(n_jobs=-1, random_state=42),
-        # LinearSVC(random_state=42,max_iter=5000),
-        # LogisticRegression(n_jobs=-1, random_state=42),
-        # GaussianNB(),
-        # CatBoostClassifier(random_state=42,logging_level='Silent'),
-        # SGDClassifier(n_jobs=-1, random_state=42)
+        XGBClassifier(n_jobs=-1, random_state=42),
+        LinearSVC(random_state=42,max_iter=5000),
+        LogisticRegression(n_jobs=-1, random_state=42),
+        GaussianNB(),
+        CatBoostClassifier(random_state=42,logging_level='Silent'),
+        SGDClassifier(n_jobs=-1, random_state=42)
     ]
     return classifiers
 
@@ -30,21 +30,26 @@ embeddings_array = np.array(list(embedCSV.values))
 dict_embeddings = {embedCSV.index[i]: embeddings_array[i] for i in range(len(embeddings_array))}
 vector_size = embedCSV.shape[1]
 
-for t in ['Static']: #'Growing', 'Undersampling', , 'Uniform'
+for t in ['Static','Growing', 'Uniform']: # 'Undersampling'
     logging.info("Starting training with " + t + " dataset")
     for i in range(800, -1, -200):
         logging.info("Starting training with threshold: " + str(i))
         metrics_to_csv = {}
         for f in range(10):
             logging.info("Starting training with fold: " + str(f))
-            X_train1 = np.loadtxt('../DB/'+t+'/T'+str(i)+'/X_train_Fold'+str(f)+'.csv', delimiter=',',dtype=str)
+            X_train1 = set(np.loadtxt('../DB/'+t+'/T'+str(i)+'/X_train_Fold'+str(f)+'.csv', delimiter=',',dtype=str))
             y_train = np.loadtxt('../DB/'+t+'/T'+str(i)+'/y_train_Fold'+str(f)+'.csv', delimiter=',')
-            X_test1 = np.loadtxt('../DB/'+t+'/T'+str(i)+'/X_test_Fold'+str(f)+'.csv', delimiter=',',dtype=str)
-            y_test = np.loadtxt('../DB/'+t+'/T'+str(i)+'/y_test_Fold'+str(f)+'.csv', delimiter=',')
+            X_test1 = np.loadtxt('../DB/Uniform/T800/X_test_Fold'+str(f)+'.csv', delimiter=',',dtype=str)
+            y_test = np.loadtxt('../DB/Uniform/T800/y_test_Fold'+str(f)+'.csv', delimiter=',')
             sample_weight = np.loadtxt('../DB/'+t+'/T'+str(i)+'/sample_weight_train_Fold'+str(f)+'.csv', delimiter=',')
             sample_weight = np.array([float(val/1000) for val in sample_weight])
+            
+            X_train2 = [i for i, pair in enumerate(X_train1) if (pair[0], pair[1]) not in X_test1 and (pair[1], pair[0]) not in X_test1]
+
+            X_train2 = [X_train1[i] for i in X_train2_indexes]
+
             X_train = []
-            for prot1, prot2 in X_train1:
+            for prot1, prot2 in X_train2:
                 prot1 = 'https://string-db.org/network/9606.ENSP' + prot1
                 prot2 = 'https://string-db.org/network/9606.ENSP' + prot2
                 emb_prot1 = dict_embeddings[prot1].reshape(1, vector_size)
@@ -63,7 +68,7 @@ for t in ['Static']: #'Growing', 'Undersampling', , 'Uniform'
 
             X_train = np.array(X_train)
             X_test = np.array(X_test)
-            for m in ['Normal','Weighted']: # ,'PU', 
+            for m in ['PU', 'Normal','Weighted']:  
                 if m not in metrics_to_csv:
                     metrics_to_csv[m] = {}
                 logging.info("Starting training with model: " + m)
@@ -75,11 +80,11 @@ for t in ['Static']: #'Growing', 'Undersampling', , 'Uniform'
                     if m == 'Weighted':
                         c.fit(X_train, y_train, sample_weight = sample_weight)
                         y_pred = c.predict(X_test)
-                    # elif m == 'PU':
-                    #     pu = ElkanotoPuClassifier(estimator = c, hold_out_ratio = 0.1)
-                    #     y_train_pu = np.where(y_train == 0, -1, y_train)
-                    #     pu.fit(X_train, y_train)
-                    #     y_pred = pu.predict(X_test)
+                    elif m == 'PU':
+                        pu = ElkanotoPuClassifier(estimator = c, hold_out_ratio = 0.1)
+                        y_train_pu = np.where(y_train == 0, -1, y_train)
+                        pu.fit(X_train, y_train)
+                        y_pred = pu.predict(X_test)
                     else:
                         c.fit(X_train, y_train)
                         y_pred = c.predict(X_test)
