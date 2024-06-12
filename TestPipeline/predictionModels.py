@@ -16,12 +16,12 @@ logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s',level = log
 def get_classifiers():
     classifiers = [
         RandomForestClassifier(n_jobs=-1, random_state=42),
-        XGBClassifier(n_jobs=-1, random_state=42),
-        LinearSVC(random_state=42,max_iter=5000),
-        LogisticRegression(n_jobs=-1, random_state=42),
-        GaussianNB(),
-        CatBoostClassifier(random_state=42,logging_level='Silent'),
-        SGDClassifier(n_jobs=-1, random_state=42)
+        # XGBClassifier(n_jobs=-1, random_state=42),
+        # LinearSVC(random_state=42,max_iter=5000),
+        # LogisticRegression(n_jobs=-1, random_state=42),
+        # GaussianNB(),
+        # CatBoostClassifier(random_state=42,logging_level='Silent'),
+        # SGDClassifier(n_jobs=-1, random_state=42)
     ]
     return classifiers
 
@@ -30,7 +30,7 @@ embeddings_array = np.array(list(embedCSV.values))
 dict_embeddings = {embedCSV.index[i]: embeddings_array[i] for i in range(len(embeddings_array))}
 vector_size = embedCSV.shape[1]
 
-for t in ['Static', 'Uniform']: #'Growing', 'Undersampling', 
+for t in ['Static']: #'Growing', 'Undersampling', , 'Uniform'
     logging.info("Starting training with " + t + " dataset")
     for i in range(800, -1, -200):
         logging.info("Starting training with threshold: " + str(i))
@@ -63,7 +63,7 @@ for t in ['Static', 'Uniform']: #'Growing', 'Undersampling',
 
             X_train = np.array(X_train)
             X_test = np.array(X_test)
-            for m in ['Weighted']: # ,'PU', 'Normal'
+            for m in ['Normal','Weighted']: # ,'PU', 
                 if m not in metrics_to_csv:
                     metrics_to_csv[m] = {}
                 logging.info("Starting training with model: " + m)
@@ -90,6 +90,6 @@ for t in ['Static', 'Uniform']: #'Growing', 'Undersampling',
                     auc = roc_auc_score(y_test, y_pred)
                     metrics_to_csv[m][n].loc[len(metrics_to_csv[m][n].index)] = [prec, rec, f1, acc, auc]
                     if f == 9:
-                        Path('../Results/11_06Test/Folds/').mkdir(parents=True, exist_ok=True)
-                        metrics_to_csv[m][n].to_csv('../Results/11_06Test/Folds/'+t+'T'+str(i)+'metrics_'+m+n+'.csv', index=False)
+                        Path('../Results/12_06Test/Folds/').mkdir(parents=True, exist_ok=True)
+                        metrics_to_csv[m][n].to_csv('../Results/12_06Test/Folds/'+t+'T'+str(i)+'metrics_'+m+n+'.csv', index=False)
                 

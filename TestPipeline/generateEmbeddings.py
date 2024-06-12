@@ -67,7 +67,7 @@ with open(annotations_file_path , 'r') as file_annot:
                 g.add((rdflib.term.URIRef(url_ensembl), rdflib.term.URIRef('http://purl.obolibrary.org/obo/go.owl#has_function') , rdflib.term.URIRef(url_GO_term)))
         if id_prot in prot_maps_STRING.keys():
             for prot in prot_maps_STRING[id_prot]:
-                url_prot = 'https://string-db.org/network/' + id_prot
+                url_prot = 'https://string-db.org/network/9606.' + prot
                 if url_prot not in prots_train:
                     prots_train.add(url_prot)
                 g.add((rdflib.term.URIRef(url_prot), rdflib.term.URIRef('http://purl.obolibrary.org/obo/go.owl#has_function') , rdflib.term.URIRef(url_GO_term)))

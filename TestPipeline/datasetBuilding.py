@@ -8,13 +8,18 @@ from pathlib import Path
 logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s',level = logging.INFO,datefmt='%Y-%m-%d %H:%M:%S')
 
 # Files
-protein_file_path = '../DB/9606.protein.enrichment.terms.v12.0.txt'
+#protein_file_path = '../DB/9606.protein.enrichment.terms.v12.0.txt'
 protein_full_links_file_path = '../DB/9606.protein.links.detailed.v12.0.txt'
 
 # Creating the Knowledge graph
-prots = pd.read_csv(protein_file_path, sep='\t', header=0)
-prots = prots[prots['term'].str.startswith('GO:')].reset_index(drop=True)
-prots = prots['#string_protein_id'].unique().tolist()
+# prots = pd.read_csv(protein_file_path, sep='\t', header=0)
+# prots = prots[prots['term'].str.startswith('GO:')].reset_index(drop=True)
+# prots = prots['#string_protein_id'].unique().tolist()
+
+
+embedCSV = pd.read_csv('../DB/HuriTest/embeddings_train.csv',index_col=0)
+prots = embedCSV.index.tolist()
+prots = [sample.replace('https://string-db.org/network/', '') for sample in prots]
 
 # Distribution of Confidence
 data_full = pd.read_csv(protein_full_links_file_path, sep=" ", header=0)
@@ -24,7 +29,7 @@ mean = data_full['combined_score'].mean()
 mean = mean
 
 # Creating thresholds
-fulldata8 = data_full[data_full['combined_score'] > 800]
+fulldata8 = data_full[data_full['combined_score'] >= 800]
 setsize = int(len(fulldata8))
 
 del fulldata8
@@ -39,13 +44,13 @@ logging.info("Starting Static dataset building ...")
 
 for i in range(800, -1, -200):
     if i == 800:
-        data = data_full.where(data_full['combined_score']>800).dropna().reset_index(drop=True).sample(n=setsize,random_state=42)
+        data = data_full.where(data_full['combined_score']>=800).dropna().reset_index(drop=True).sample(n=setsize,random_state=42)
     elif i == 600:
-        data = data_full.where(data_full['combined_score']>600).dropna().reset_index(drop=True).sample(n=setsize,random_state=42)
+        data = data_full.where(data_full['combined_score']>=600).dropna().reset_index(drop=True).sample(n=setsize,random_state=42)
     elif i == 400:
-        data = data_full.where(data_full['combined_score']>400).dropna().reset_index(drop=True).sample(n=setsize,random_state=42)
+        data = data_full.where(data_full['combined_score']>=400).dropna().reset_index(drop=True).sample(n=setsize,random_state=42)
     elif i == 200:
-        data = data_full.where(data_full['combined_score']>200).dropna().reset_index(drop=True).sample(n=setsize,random_state=42)
+        data = data_full.where(data_full['combined_score']>=200).dropna().reset_index(drop=True).sample(n=setsize,random_state=42)
     elif i == 0:
         data = data_full.sample(n=setsize,random_state=42)
 
@@ -88,15 +93,15 @@ logging.info("Starting Growing dataset building...")
 
 for i in range(800, -1, -200):
     if i == 800:
-        data = data_full.where(data_full['combined_score']>800).dropna().reset_index(drop=True).sample(frac=0.1,random_state=42)
+        data = data_full.where(data_full['combined_score']>=800).dropna().reset_index(drop=True).sample(frac=0.2,random_state=42)
     elif i == 600:
-        data = data_full.where(data_full['combined_score']>600).dropna().reset_index(drop=True).sample(frac=0.1,random_state=42)
+        data = data_full.where(data_full['combined_score']>=600).dropna().reset_index(drop=True).sample(frac=0.2,random_state=42)
     elif i == 400:
-        data = data_full.where(data_full['combined_score']>400).dropna().reset_index(drop=True).sample(frac=0.1,random_state=42)
+        data = data_full.where(data_full['combined_score']>=400).dropna().reset_index(drop=True).sample(frac=0.2,random_state=42)
     elif i == 200:
-        data = data_full.where(data_full['combined_score']>200).dropna().reset_index(drop=True).sample(frac=0.1,random_state=42)
+        data = data_full.where(data_full['combined_score']>=200).dropna().reset_index(drop=True).sample(frac=0.2,random_state=42)
     elif i == 0:
-        data = data_full.sample(frac=0.1,random_state=42)
+        data = data_full.sample(frac=0.2,random_state=42)
 
     # Creating the dataset
     pairs_prots = []
@@ -137,19 +142,19 @@ logging.info("Starting Uniform dataset building...")
 
 for i in range(800, -1, -200):
     if i == 800:
-        data8 = data_full.where(data_full['combined_score']>800).dropna().reset_index(drop=True).sample(n=setsize,random_state=42)
+        data8 = data_full.where(data_full['combined_score']>=800).dropna().reset_index(drop=True).sample(n=setsize,random_state=42)
         data = data8
     elif i == 600:
-        data6 = data_full.where(data_full['combined_score']>600).where(data_full['combined_score']<=800).dropna().reset_index(drop=True).sample(n=setsize,random_state=42)
+        data6 = data_full.where(data_full['combined_score']>=600).where(data_full['combined_score']<800).dropna().reset_index(drop=True).sample(n=setsize,random_state=42)
         data = pd.concat([data8,data6])
     elif i == 400:
-        data4 = data_full.where(data_full['combined_score']>400).where(data_full['combined_score']<=600).dropna().reset_index(drop=True).sample(n=setsize,random_state=42)
+        data4 = data_full.where(data_full['combined_score']>=400).where(data_full['combined_score']<600).dropna().reset_index(drop=True).sample(n=setsize,random_state=42)
         data = pd.concat([data8,data6,data4])
     elif i == 200:
-        data2 = data_full.where(data_full['combined_score']>200).where(data_full['combined_score']<=400).dropna().reset_index(drop=True).sample(n=setsize,random_state=42)
+        data2 = data_full.where(data_full['combined_score']>=200).where(data_full['combined_score']<400).dropna().reset_index(drop=True).sample(n=setsize,random_state=42)
         data = pd.concat([data8,data6,data4,data2])
     elif i == 0:
-        data0 = data_full.where(data_full['combined_score']<=200).dropna().reset_index(drop=True).sample(n=setsize,random_state=42)
+        data0 = data_full.where(data_full['combined_score']<200).dropna().reset_index(drop=True).sample(n=setsize,random_state=42)
         data = pd.concat([data8,data6,data4,data2,data0])
 
     # Creating the dataset
