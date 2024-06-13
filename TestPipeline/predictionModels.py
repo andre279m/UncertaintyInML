@@ -37,19 +37,24 @@ for t in ['Static','Growing', 'Uniform']: # 'Undersampling'
         metrics_to_csv = {}
         for f in range(10):
             logging.info("Starting training with fold: " + str(f))
-            X_train1 = set(np.loadtxt('../DB/'+t+'/T'+str(i)+'/X_train_Fold'+str(f)+'.csv', delimiter=',',dtype=str))
-            y_train = np.loadtxt('../DB/'+t+'/T'+str(i)+'/y_train_Fold'+str(f)+'.csv', delimiter=',')
-            X_test1 = np.loadtxt('../DB/Uniform/T800/X_test_Fold'+str(f)+'.csv', delimiter=',',dtype=str)
-            y_test = np.loadtxt('../DB/Uniform/T800/y_test_Fold'+str(f)+'.csv', delimiter=',')
-            sample_weight = np.loadtxt('../DB/'+t+'/T'+str(i)+'/sample_weight_train_Fold'+str(f)+'.csv', delimiter=',')
-            sample_weight = np.array([float(val/1000) for val in sample_weight])
-            
-            X_train2 = [i for i, pair in enumerate(X_train1) if (pair[0], pair[1]) not in X_test1 and (pair[1], pair[0]) not in X_test1]
 
-            X_train2 = [X_train1[i] for i in X_train2_indexes]
+            X_train1 = pd.read_csv('DB/'+t+'/T'+str(i)+'/X_train_Fold'+str(f)+'.csv', sep=',',dtype=str,header=None)
+            y_train = pd.read_csv('DB/'+t+'/T'+str(i)+'/y_train_Fold'+str(f)+'.csv', sep=',',header=None)
+            X_test1 = pd.read_csv('DB/Uniform/T800/X_test_Fold'+str(f)+'.csv', sep=',',dtype=str,header=None)
+            y_test = pd.read_csv('DB/Uniform/T800/y_test_Fold'+str(f)+'.csv', sep=',',header=None)
+            sample_weight = pd.read_csv('DB/'+t+'/T'+str(i)+'/sample_weight_train_Fold'+str(f)+'.csv', sep=',',header=None)
+
+            merged_df = X_train1.merge(X_test1, indicator=True, how='outer')
+            X_train1 = merged_df[merged_df['_merge'] == 'left_only']
+            X_train1 = X_train1.drop(columns='_merge').dropna(axis=1).to_numpy(dtype=str)
+            indexes = X_train1.index
+            y_train = y_train.iloc[indexes].dropna().to_numpy().ravel()
+            sample_weight = sample_weight.iloc[indexes].dropna().to_numpy().ravel()
+            X_test1 = X_test1.to_numpy(dtype=str)
+            y_test = y_test.to_numpy().ravel()
 
             X_train = []
-            for prot1, prot2 in X_train2:
+            for prot1, prot2 in X_train1:
                 prot1 = 'https://string-db.org/network/9606.ENSP' + prot1
                 prot2 = 'https://string-db.org/network/9606.ENSP' + prot2
                 emb_prot1 = dict_embeddings[prot1].reshape(1, vector_size)
