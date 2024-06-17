@@ -3,10 +3,10 @@ import logging
 
 logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s',level = logging.INFO,datefmt='%Y-%m-%d %H:%M:%S')
 
-for t in ['Static']: # 'Growing', 'Static', 'Undersampling', 'Uniform'
+for t in ['Static','Growing', 'Uniform']: # 'Undersampling',
     logging.info("Starting training with " + t + " dataset")
-    for m in ['Weighted', 'Normal']:
-        for clf in ["RandomForestClassifier"]: # ,"XGBClassifier","LinearSVC","LogisticRegression","GaussianNB","CatBoostClassifier","SGDClassifier"
+    for m in ['Weighted', 'Normal', 'PU']:
+        for clf in ["RandomForestClassifier","XGBClassifier"]: # ,"LinearSVC","LogisticRegression","GaussianNB","CatBoostClassifier","SGDClassifier"
             global_results = pd.DataFrame(columns=['PRECISION(MEDIAN)','PRECISION(IQR)','RECALL(MEDIAN)','RECALL(IQR)','WAF(MEDIAN)','WAF(IQR)','ACCURACY(MEDIAN)','ACCURACY(IQR)','ROC AUC(MEDIAN)','ROC AUC(IQR)'])
             for i in range(800, -1, -200):
                 d = pd.read_csv('../Results/12_06Test/Folds/' + t + 'T' + str(i) + 'metrics_' + m + clf + '.csv',header=0)

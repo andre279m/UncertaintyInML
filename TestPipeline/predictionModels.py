@@ -17,11 +17,11 @@ def get_classifiers():
     classifiers = [
         RandomForestClassifier(n_jobs=-1, random_state=42),
         XGBClassifier(n_jobs=-1, random_state=42),
-        LinearSVC(random_state=42,max_iter=5000),
-        LogisticRegression(n_jobs=-1, random_state=42),
-        GaussianNB(),
-        CatBoostClassifier(random_state=42,logging_level='Silent'),
-        SGDClassifier(n_jobs=-1, random_state=42)
+        # LinearSVC(random_state=42,max_iter=5000,dual="auto"),
+        # LogisticRegression(n_jobs=-1, random_state=42),
+        # GaussianNB(),
+        # CatBoostClassifier(random_state=42,logging_level='Silent'),
+        # SGDClassifier(n_jobs=-1, random_state=42)
     ]
     return classifiers
 
@@ -38,20 +38,18 @@ for t in ['Static','Growing', 'Uniform']: # 'Undersampling'
         for f in range(10):
             logging.info("Starting training with fold: " + str(f))
 
-            X_train1 = pd.read_csv('DB/'+t+'/T'+str(i)+'/X_train_Fold'+str(f)+'.csv', sep=',',dtype=str,header=None)
-            y_train = pd.read_csv('DB/'+t+'/T'+str(i)+'/y_train_Fold'+str(f)+'.csv', sep=',',header=None)
-            X_test1 = pd.read_csv('DB/Uniform/T800/X_test_Fold'+str(f)+'.csv', sep=',',dtype=str,header=None)
-            y_test = pd.read_csv('DB/Uniform/T800/y_test_Fold'+str(f)+'.csv', sep=',',header=None)
-            sample_weight = pd.read_csv('DB/'+t+'/T'+str(i)+'/sample_weight_train_Fold'+str(f)+'.csv', sep=',',header=None)
+            X_train1 = pd.read_csv('../DB/'+t+'/T'+str(i)+'/X_train_Fold'+str(f)+'.csv', sep=',',dtype=str,header=None)
+            y_train = pd.read_csv('../DB/'+t+'/T'+str(i)+'/y_train_Fold'+str(f)+'.csv', sep=',',header=None)
+            X_test1 = pd.read_csv('../DB/Uniform/T800/X_test_Fold'+str(f)+'.csv', sep=',',dtype=str,header=None)
+            y_test = pd.read_csv('../DB/Uniform/T800/y_test_Fold'+str(f)+'.csv', sep=',',header=None).to_numpy().ravel()
+            sample_weight = pd.read_csv('../DB/'+t+'/T'+str(i)+'/sample_weight_train_Fold'+str(f)+'.csv', sep=',',header=None)
 
-            merged_df = X_train1.merge(X_test1, indicator=True, how='outer')
-            X_train1 = merged_df[merged_df['_merge'] == 'left_only']
-            X_train1 = X_train1.drop(columns='_merge').dropna(axis=1).to_numpy(dtype=str)
+            X_train1 = X_train1[~X_train1.isin(X_test1)].dropna()
             indexes = X_train1.index
+            X_train1 = X_train1.to_numpy(dtype=str)
             y_train = y_train.iloc[indexes].dropna().to_numpy().ravel()
             sample_weight = sample_weight.iloc[indexes].dropna().to_numpy().ravel()
             X_test1 = X_test1.to_numpy(dtype=str)
-            y_test = y_test.to_numpy().ravel()
 
             X_train = []
             for prot1, prot2 in X_train1:
