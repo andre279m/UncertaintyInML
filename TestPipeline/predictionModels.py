@@ -40,8 +40,8 @@ for t in ['Static','Growing', 'Uniform']: # 'Undersampling'
 
             X_train1 = pd.read_csv('../DB/'+t+'/T'+str(i)+'/X_train_Fold'+str(f)+'.csv', sep=',',dtype=str,header=None)
             y_train = pd.read_csv('../DB/'+t+'/T'+str(i)+'/y_train_Fold'+str(f)+'.csv', sep=',',header=None)
-            X_test1 = pd.read_csv('../DB/Uniform/T800/X_test_Fold'+str(f)+'.csv', sep=',',dtype=str,header=None)
-            y_test = pd.read_csv('../DB/Uniform/T800/y_test_Fold'+str(f)+'.csv', sep=',',header=None).to_numpy().ravel()
+            X_test1 = pd.read_csv('../DB/Uniform/T0/X_test_Fold'+str(f)+'.csv', sep=',',dtype=str,header=None)
+            y_test = pd.read_csv('../DB/Uniform/T0/y_test_Fold'+str(f)+'.csv', sep=',',header=None).to_numpy().ravel()
             sample_weight = pd.read_csv('../DB/'+t+'/T'+str(i)+'/sample_weight_train_Fold'+str(f)+'.csv', sep=',',header=None)
 
             X_train1 = X_train1[~X_train1.isin(X_test1)].dropna()

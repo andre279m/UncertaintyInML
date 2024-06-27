@@ -20,17 +20,14 @@ def get_classifiers():
 # Files
 protein_file_path = 'DB/9606.protein.enrichment.terms.v12.0.txt'
 protein_full_links_file_path = 'DB/9606.protein.links.detailed.v12.0.txt'
-semantic_similarity_file_path = 'DB/NegativeSamplesUncertainty.csv'
 # # Creating the Knowledge graph
-prots = pd.read_csv(protein_file_path, sep='\t', header=0)
-prots = prots[prots['term'].str.startswith('GO:')].reset_index(drop=True)
-prots = prots['#string_protein_id'].unique().tolist()
+embedtrainCSV = pd.read_csv('DB/HuriTest/embeddings_train.csv',index_col=0)
+prots = embedtrainCSV.index.tolist()
+prots = [sample.replace('https://string-db.org/network/', '') for sample in prots]
 
 # # Distribution of Confidence
 data_full = pd.read_csv(protein_full_links_file_path, sep=" ", header=0)
 data_full = data_full[data_full["protein1"].isin(prots) & data_full["protein2"].isin(prots)]
-# mean of confidence score
-# mean = data_full['combined_score'].mean()
 
 all_negative_pairs_prots = pd.read_csv('DB/negative_pairs_prots.csv', header=0)
 all_negative_pairs_prots = list(tuple(x) for x in all_negative_pairs_prots.to_numpy())
@@ -39,7 +36,6 @@ negative_pairs_prots_test = pd.read_csv('DB/HuriTest/HuRI_negatives.tsv',sep='\t
 negative_pairs_prots_test = list(('http:/www.ensembl.org/Homo_sapiens/Location/View?r=' + x[0], 'http:/www.ensembl.org/Homo_sapiens/Location/View?r=' + x[1],0) for x in negative_pairs_prots_test.to_numpy())
 
 # Pipeline
-embedtrainCSV = pd.read_csv('DB/HuriTest/embeddings_train.csv',index_col=0)
 embeddings_train_array = np.array(list(embedtrainCSV.values))
 train_embeddings = {embedtrainCSV.index[i]: embeddings_train_array[i] for i in range(len(embeddings_train_array))}
 
@@ -97,7 +93,7 @@ for j, (train_index, test_index) in enumerate(skf.split(X, y)):
     X_train, X_test = X[train_index], X[test_index]
     y_train, y_test = y[train_index], y[test_index]
 
-    # logging.info("Training with threshold: " + str(i) + " and fold: " + str(j))
+    logging.info("Training fold: " + str(j))
     clfs = get_classifiers()
     for c in clfs:
         n = type(c).__name__
@@ -111,6 +107,6 @@ for j, (train_index, test_index) in enumerate(skf.split(X, y)):
         auc = roc_auc_score(y_test, y_pred)
         metrics_to_csv.loc[j] = [prec, rec, f1, acc, auc]
         if j == 9:
-            Path('Results/5_04Test/HuRICheck/').mkdir(parents=True, exist_ok=True)
-            metrics_to_csv.to_csv('Results/5_04Test/HuRICheck/Mixed50Metrics_'+m+n+'.csv', index=False)
+            Path('Results/25_06Test/HuRICheck/').mkdir(parents=True, exist_ok=True)
+            metrics_to_csv.to_csv('Results/25_06Test/HuRICheck/Mixed50Metrics_'+m+n+'.csv', index=False)
         
